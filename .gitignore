@@ -1,0 +1,12 @@
+# Backups locales
+*.BACKUP.html
+
+# Firebase
+.firebase/
+firebase-debug.log
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db
+node_modules/

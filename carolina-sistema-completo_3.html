@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sistema Carolina · Gestión Patio Curauma</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --casa-color:#B5651D; --casa-soft:#FEF3E4; --casa-border:#F2D9B8;
+  --bazar-color:#2A5FCC; --bazar-soft:#EAF0FE; --bazar-border:#BDD0F5;
+  --club-color:#1F7A52;  --club-soft:#E4F5EE;  --club-border:#AEDDC8;
+  --p1:#DC2626; --p2:#D97706; --p3:#2563EB; --p4:#6B7280;
+  --sage:#4A7B6F; --sage-light:#6BA399; --sage-dim:#E8F0EE;
+  --coral:#E84040; --coral-soft:#FDE8E8;
+  --gold:#C9973A; --gold-soft:#FDF4E4;
+  --purple:#5B4FCF; --purple-soft:#F0F0FF;
+  --bg:#F4F4F2; --surface:#FFFFFF; --charcoal:#1A1A1A; --mid:#6B7280; --border:#E5E7EB;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);min-height:100vh;padding-bottom:80px;}
+
+/* ── HEADER ── */
+.top-bar{background:var(--charcoal);padding:14px 16px 0;position:sticky;top:0;z-index:60;}
+.top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.top-name{font-size:13px;font-weight:800;color:#fff;letter-spacing:0.04em;}
+.top-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:#777;}
+.sprint-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);display:inline-block;margin-right:5px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--charcoal);border-top:1px solid #333;display:flex;z-index:60;}
+.nav-item{flex:1;padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border:none;background:none;transition:all .2s;}
+.nav-icon{font-size:20px;line-height:1;}
+.nav-label{font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#666;transition:color .2s;}
+.nav-item.active .nav-label{color:var(--coral);}
+.nav-item.active .nav-icon{transform:translateY(-2px);}
+
+/* ── PAGES ── */
+.page{display:none;padding:14px 14px 20px;}
+.page.active{display:block;}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;}
+.card-title{font-size:13px;font-weight:700;color:var(--charcoal);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.card-sub{font-size:10px;font-weight:600;color:var(--mid);letter-spacing:.06em;text-transform:uppercase;}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.stat-box{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;}
+.stat-num{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;line-height:1;}
+.stat-lbl{font-size:9px;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+
+/* ── CAPTURE ── */
+.capture-wrap{padding:12px 14px 10px;background:var(--surface);border-bottom:1px solid var(--border);}
+.capture-input-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+.capture-input{flex:1;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;border:2px solid var(--border);border-radius:10px;padding:10px 14px;outline:none;color:var(--charcoal);background:var(--bg);transition:border-color .2s;}
+.capture-input:focus{border-color:var(--sage);background:#fff;}
+.capture-input::placeholder{color:#bbb;font-weight:400;}
+.capture-btn{width:42px;height:42px;border-radius:10px;border:none;background:var(--charcoal);color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.meta-row{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;}
+.meta-select,.meta-time,.meta-date-in{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;border:1.5px solid var(--border);border-radius:8px;padding:5px 8px;background:var(--bg);color:var(--charcoal);outline:none;cursor:pointer;flex:1;min-width:80px;}
+.meta-time,.meta-date-in{font-family:'JetBrains Mono',monospace;}
+.meta-select:focus,.meta-time:focus,.meta-date-in:focus{border-color:var(--sage);}
+.freq-row{display:flex;gap:5px;flex:1;}
+.freq-btn{flex:1;padding:5px 4px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--mid);font-size:10px;font-weight:700;cursor:pointer;text-align:center;transition:all .15s;}
+.freq-btn.sel{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
+.date-row-label{font-size:10px;font-weight:700;color:var(--mid);align-self:center;flex-shrink:0;white-space:nowrap;}
+
+/* ── SORT BAR ── */
+.sort-bar{display:flex;gap:6px;padding:8px 14px;background:var(--bg);align-items:center;border-bottom:1px solid var(--border);}
+.sort-label{font-size:10px;color:var(--mid);font-weight:700;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;}
+.sort-btn{font-size:10px;font-weight:600;padding:4px 10px;border-radius:99px;border:1.5px solid var(--border);background:var(--surface);color:var(--mid);cursor:pointer;transition:all .15s;}
+.sort-btn.active{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
+
+/* ── TASK CARDS ── */
+.task-card{background:var(--surface);border:1.5px solid var(--border);border-radius:11px;padding:12px 12px 10px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;position:relative;overflow:hidden;transition:all .2s;}
+.task-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:11px 0 0 11px;}
+.task-card.ctx-casa::before{background:var(--casa-color);}
+.task-card.ctx-bazar::before{background:var(--bazar-color);}
+.task-card.ctx-club::before{background:var(--club-color);}
+.task-card.done{opacity:.42;}
+.task-card.done .task-text{text-decoration:line-through;}
+.task-card.overdue{border-color:#FCA5A5;background:#FFF5F5;}
+.task-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s;margin-top:1px;}
+.task-check:hover{border-color:var(--sage);}
+.task-check.checked{background:var(--sage);border-color:var(--sage);color:#fff;}
+.task-body{flex:1;min-width:0;}
+.task-text{font-size:13px;font-weight:500;line-height:1.35;color:var(--charcoal);margin-bottom:5px;word-break:break-word;}
+.task-time-line{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mid);margin-bottom:5px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.time-chip{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1px 7px;font-size:10px;}
+.task-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;}
+.tag-ctx-casa{background:var(--casa-soft);color:var(--casa-color);}
+.tag-ctx-bazar{background:var(--bazar-soft);color:var(--bazar-color);}
+.tag-ctx-club{background:var(--club-soft);color:var(--club-color);}
+.tag-p1{background:#FEE2E2;color:var(--p1);}
+.tag-p2{background:#FEF3C7;color:var(--p2);}
+.tag-p3{background:#DBEAFE;color:var(--p3);}
+.tag-p4{background:#F3F4F6;color:var(--p4);}
+.tag-deadline{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:99px;background:var(--bg);color:var(--mid);border:1px solid var(--border);}
+.tag-deadline.soon{background:#FEF3C7;color:#92400E;border-color:#FDE68A;}
+.tag-deadline.overdue{background:#FEE2E2;color:#991B1B;border-color:#FCA5A5;}
+.tag-freq{background:var(--purple-soft);color:var(--purple);}
+.task-del{background:none;border:none;color:#D1D5DB;cursor:pointer;font-size:18px;padding:0 2px;transition:color .15s;flex-shrink:0;line-height:1;}
+.task-del:hover{color:var(--p1);}
+
+/* ── SECTION HEADERS ── */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin:14px 0 7px;}
+.section-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);}
+.section-count{font-size:10px;font-weight:600;background:var(--border);color:var(--mid);padding:2px 8px;border-radius:99px;}
+.empty-state{text-align:center;padding:28px 16px;color:var(--mid);font-size:13px;}
+
+/* ── SPRINT ── */
+.sprint-bar-wrap{height:7px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:10px;}
+.sprint-bar-fill{height:100%;background:linear-gradient(90deg,var(--sage),var(--sage-light));border-radius:99px;transition:width .5s;}
+.sprint-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;margin-bottom:6px;background:var(--bg);border:1px solid var(--border);}
+.sprint-item.done{opacity:.45;text-decoration:line-through;}
+.sprint-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .2s;flex-shrink:0;}
+.sprint-check:hover{border-color:var(--sage);}
+.sprint-check.checked{background:var(--sage);border-color:var(--sage);color:#fff;}
+.sprint-text{font-size:13px;flex:1;}
+.sprint-owner{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;background:var(--sage-dim);color:var(--sage);}
+.sprint-prio{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;}
+
+/* ── MATRIZ ── */
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.matrix-cell{border-radius:10px;padding:12px;min-height:110px;}
+.mc-q1{background:var(--coral-soft);border:1.5px solid #F5C0C0;}
+.mc-q2{background:var(--sage-dim);border:1.5px solid #BDDAD4;}
+.mc-q3{background:var(--gold-soft);border:1.5px solid #F0DDB0;}
+.mc-q4{background:#F9F9F9;border:1.5px solid #E0E0E0;}
+.matrix-label{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px;}
+.mc-q1 .matrix-label{color:var(--coral);} .mc-q2 .matrix-label{color:var(--sage);}
+.mc-q3 .matrix-label{color:var(--gold);} .mc-q4 .matrix-label{color:var(--mid);}
+.m-task{font-size:11px;background:rgba(255,255,255,.75);border-radius:6px;padding:5px 8px;margin-bottom:4px;cursor:pointer;display:flex;align-items:flex-start;gap:5px;line-height:1.3;}
+.m-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.mc-q1 .m-dot{background:var(--coral);} .mc-q2 .m-dot{background:var(--sage);}
+.mc-q3 .m-dot{background:var(--gold);} .mc-q4 .m-dot{background:var(--mid);}
+
+/* ── EQUIPO ── */
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.team-card{border:1.5px solid var(--border);border-radius:10px;padding:12px;background:var(--surface);}
+.team-avatar{width:36px;height:36px;border-radius:50%;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:7px;}
+.team-name{font-size:13px;font-weight:700;margin-bottom:1px;}
+.team-role{font-size:10px;color:var(--mid);margin-bottom:8px;}
+.bar-wrap{margin-bottom:3px;}
+.bar-label{font-size:9px;color:var(--mid);margin-bottom:2px;display:flex;justify-content:space-between;}
+.bar-track{height:4px;background:var(--border);border-radius:99px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:99px;}
+.team-insight{font-size:10px;font-style:italic;color:#3A6FB5;margin-top:7px;padding:4px 8px;background:#EBF1FA;border-radius:6px;line-height:1.4;}
+.team-tasks{font-size:10px;color:var(--mid);margin-top:5px;}
+
+/* ── PROTOCOLO ITEM ── */
+.tip-list{list-style:none;}
+.tip-list li{padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;display:flex;gap:10px;align-items:flex-start;line-height:1.5;}
+.tip-list li:last-child{border-bottom:none;}
+.tip-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+
+/* ── COACH ── */
+.coach-hero{background:linear-gradient(135deg,var(--charcoal) 0%,#3D3D3D 100%);color:#fff;border-radius:12px;padding:18px;margin-bottom:12px;}
+.coach-eyebrow{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:6px;}
+.coach-msg{font-size:15px;font-weight:600;line-height:1.5;margin-bottom:10px;}
+.coach-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.coach-chip{background:rgba(255,255,255,.1);font-size:10px;padding:3px 9px;border-radius:99px;color:#ccc;}
+.scenario-card{border-radius:11px;margin-bottom:10px;overflow:hidden;border:1.5px solid var(--border);}
+.scenario-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.scenario-title{font-size:13px;font-weight:700;}
+.scenario-body{padding:0 14px 14px;font-size:13px;line-height:1.6;color:#444;display:none;}
+.scenario-body.open{display:block;}
+.scenario-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;}
+.s-red{background:#FEE2E2;color:var(--p1);} .s-yellow{background:#FEF3C7;color:#92400E;}
+.s-green{background:var(--sage-dim);color:var(--sage);} .s-blue{background:#DBEAFE;color:var(--p3);}
+.method-box{padding:12px;border-radius:9px;margin-top:8px;}
+.m135-grid{display:grid;gap:8px;margin-top:8px;}
+.m135-item{padding:11px 12px;border-radius:8px;border-left:3px solid;}
+.m135-g{background:var(--coral-soft);border-color:var(--coral);}
+.m135-m{background:var(--gold-soft);border-color:var(--gold);}
+.m135-p{background:var(--sage-dim);border-color:var(--sage);}
+.m135-label{font-size:11px;font-weight:800;margin-bottom:3px;}
+.m135-g .m135-label{color:var(--coral);} .m135-m .m135-label{color:var(--gold);} .m135-p .m135-label{color:var(--sage);}
+.m135-desc{font-size:11px;color:var(--charcoal);}
+
+/* ── METAS ── */
+.meta-goal{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;}
+.goal-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.goal-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:800;color:var(--sage);opacity:.35;width:30px;flex-shrink:0;}
+.goal-title{font-size:13px;font-weight:700;}
+.goal-owner{font-size:10px;color:var(--mid);}
+.goal-bar-wrap{height:5px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:4px;}
+.goal-bar{height:100%;border-radius:99px;transition:width .5s;}
+.goal-pct{font-size:10px;color:var(--mid);}
+.goal-kpi{font-size:11px;color:var(--mid);margin-top:5px;font-style:italic;}
+
+/* ── UTILS ── */
+.btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:700;padding:8px 14px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;}
+.btn-sage{background:var(--sage);color:#fff;} .btn-sage:hover{background:var(--sage-light);}
+.btn-ghost{background:var(--bg);color:var(--charcoal);border:1.5px solid var(--border);}
+.btn-sm{font-size:11px;padding:5px 10px;}
+.swipe-hint{text-align:center;font-size:10px;color:#C4C4C4;padding:8px 0;letter-spacing:.04em;}
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--charcoal);color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;font-weight:500;z-index:999;transition:transform .25s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.chevron{font-size:12px;color:var(--mid);transition:transform .25s;}
+.chevron.open{transform:rotate(180deg);}
+
+/* ── MOOD TEST ── */
+.mood-step{display:none;}
+.mood-step.active{display:block;}
+.mood-question{font-size:15px;font-weight:700;color:var(--charcoal);margin-bottom:6px;line-height:1.4;}
+.mood-sub{font-size:12px;color:var(--mid);margin-bottom:16px;line-height:1.4;}
+.mood-options{display:grid;gap:8px;}
+.mood-opt{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;border:2px solid var(--border);background:var(--bg);cursor:pointer;transition:all .18s;user-select:none;}
+.mood-opt:hover{border-color:var(--sage);background:var(--sage-dim);}
+.mood-opt.sel{border-color:var(--sage);background:var(--sage-dim);}
+.mood-opt-emoji{font-size:22px;flex-shrink:0;width:30px;text-align:center;}
+.mood-opt-text{font-size:13px;font-weight:500;flex:1;}
+.mood-opt-val{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--mid);}
+.mood-progress{display:flex;gap:4px;margin-bottom:14px;}
+.mood-pip{height:4px;border-radius:99px;flex:1;background:var(--border);transition:background .3s;}
+.mood-pip.done{background:var(--sage);}
+.mood-pip.current{background:var(--sage-light);}
+.mood-nav{display:flex;gap:8px;margin-top:14px;}
+.mood-result{display:none;}
+.mood-result.show{display:block;}
+.profile-badge{border-radius:14px;padding:18px;margin-bottom:12px;text-align:center;}
+.profile-emoji{font-size:42px;margin-bottom:8px;}
+.profile-name{font-size:17px;font-weight:800;margin-bottom:4px;}
+.profile-sub{font-size:12px;opacity:.75;margin-bottom:10px;}
+.profile-desc{font-size:13px;line-height:1.6;text-align:left;}
+.recom-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.5;}
+.recom-item:last-child{border-bottom:none;}
+.recom-icon{font-size:16px;flex-shrink:0;}
+.mood-history-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.mood-history-row:last-child{border-bottom:none;}
+.mood-history-emoji{font-size:18px;width:26px;text-align:center;}
+.mood-history-date{color:var(--mid);font-family:'JetBrains Mono',monospace;font-size:10px;flex-shrink:0;}
+.mood-history-profile{font-weight:600;flex:1;}
+.mood-score-bar{height:5px;border-radius:99px;margin-top:3px;}
+.dopamine-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.dopamine-chip{padding:5px 10px;border-radius:99px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .15s;}
+.dopamine-chip:hover{transform:scale(1.05);}
+
+@media(min-width:600px){
+  .capture-wrap,main,#statsRibbon,.sort-bar{max-width:640px;margin-left:auto;margin-right:auto;}
+  .top-bar{padding:14px 24px 0;}
+  .bottom-nav{justify-content:center;}
+  .nav-item{max-width:120px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN / AUTH OVERLAY ── -->
+<div id="authOverlay" style="position:fixed;inset:0;z-index:200;background:linear-gradient(160deg,#1A1A1A 0%,#243b32 100%);display:flex;align-items:center;justify-content:center;padding:24px;">
+  <div style="width:100%;max-width:360px;background:#fff;border-radius:18px;padding:28px 24px;box-shadow:0 20px 60px rgba(0,0,0,.4);font-family:'Inter',sans-serif;">
+    <div style="text-align:center;margin-bottom:22px;">
+      <div style="font-size:34px;line-height:1;margin-bottom:8px;">🟢</div>
+      <div style="font-size:17px;font-weight:800;color:#1A1A1A;">Gestión Patio Curauma</div>
+      <div style="font-size:12px;color:#6B7280;margin-top:3px;" id="authSubtitle">Inicia sesión para continuar</div>
+    </div>
+    <input id="authEmail" type="email" autocomplete="email" placeholder="Correo electrónico"
+      style="width:100%;padding:13px 14px;margin-bottom:10px;border:1.5px solid #E5E7EB;border-radius:11px;font-size:14px;outline:none;font-family:inherit;">
+    <input id="authPass" type="password" autocomplete="current-password" placeholder="Contraseña"
+      style="width:100%;padding:13px 14px;margin-bottom:6px;border:1.5px solid #E5E7EB;border-radius:11px;font-size:14px;outline:none;font-family:inherit;">
+    <div id="authError" style="color:#DC2626;font-size:12px;min-height:16px;margin:4px 2px 10px;"></div>
+    <button id="authPrimaryBtn" type="button"
+      style="width:100%;padding:13px;background:#1F7A52;color:#fff;border:none;border-radius:11px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit;">Entrar</button>
+    <div style="text-align:center;margin-top:16px;font-size:12.5px;color:#6B7280;">
+      <span id="authToggleText">¿No tienes cuenta?</span>
+      <a id="authToggleLink" href="#" style="color:#1F7A52;font-weight:700;text-decoration:none;margin-left:4px;">Crear cuenta</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<div class="top-bar">
+  <div class="top-row">
+    <div class="top-name"><span class="sprint-dot"></span>Carolina · Gestión Patio Curauma</div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="top-date" id="topDate"></div>
+      <button id="logoutBtn" type="button" title="Cerrar sesión"
+        style="background:none;border:1px solid #444;color:#bbb;font-size:10px;font-weight:600;padding:4px 9px;border-radius:7px;cursor:pointer;font-family:inherit;">Salir</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 · TAREAS
+════════════════════════════════════════ -->
+<div class="page active" id="pg-tareas">
+  <!-- capture -->
+  <div class="capture-wrap" style="position:sticky;top:48px;z-index:40;">
+    <div class="capture-input-row">
+      <input class="capture-input" id="captureInput" type="text"
+        placeholder="Anota rápido… qué hay que hacer"
+        autocomplete="off" autocorrect="off"
+        onkeydown="if(event.key==='Enter')addTask()">
+      <button class="capture-btn" onclick="addTask()">+</button>
+    </div>
+    <div class="meta-row">
+      <select class="meta-select" id="metaCtx">
+        <option value="casa">🏠 Casa</option>
+        <option value="bazar">🛍️ Bazar·Tienda</option>
+        <option value="club" selected>🟢 Club Patio</option>
+      </select>
+      <select class="meta-select" id="metaPrio">
+        <option value="p1">🔴 Urgente</option>
+        <option value="p2" selected>🟡 Alta</option>
+        <option value="p3">🔵 Normal</option>
+        <option value="p4">⚪ Cuando pueda</option>
+      </select>
+    </div>
+    <div class="meta-row">
+      <span class="date-row-label">Frecuencia:</span>
+      <div class="freq-row">
+        <button class="freq-btn sel" id="freq-unica"   onclick="setFreq('unica')">1× Única</button>
+        <button class="freq-btn"     id="freq-diaria"  onclick="setFreq('diaria')">🔁 Diaria</button>
+        <button class="freq-btn"     id="freq-semanal" onclick="setFreq('semanal')">📆 Semanal</button>
+        <button class="freq-btn"     id="freq-casual"  onclick="setFreq('casual')">✦ Casual</button>
+      </div>
+    </div>
+    <div class="meta-row" id="rowDeadline">
+      <span class="date-row-label">📅 Deadline:</span>
+      <input class="meta-date-in" type="date" id="metaDate">
+    </div>
+    <div class="meta-row">
+      <span class="date-row-label">⏰ Hora:</span>
+      <input class="meta-time" type="time" id="metaTime">
+      <select class="meta-select" id="metaDur">
+        <option value="">Sin duración</option>
+        <option value="15">15 min</option><option value="30">30 min</option>
+        <option value="45">45 min</option><option value="60">1 hora</option>
+        <option value="90">1.5 h</option><option value="120">2 h</option>
+        <option value="180">3 h</option><option value="240">4 h</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- stats ribbon -->
+  <div style="display:flex;background:var(--surface);border-bottom:1px solid var(--border);" id="statsRibbon">
+    <div class="stat-chip" style="padding:7px 10px;text-align:center;flex:1;min-width:60px;border-right:1px solid var(--border);">
+      <div class="stat-num" id="sTodo" style="font-size:16px;">0</div><div class="stat-lbl">Total</div></div>
+    <div class="stat-chip" style="padding:7px 10px;text-align:center;flex:1;min-width:60px;border-right:1px solid var(--border);">
+      <div class="stat-num" id="sUrgente" style="font-size:16px;color:var(--p1)">0</div><div class="stat-lbl">Urgentes</div></div>
+    <div class="stat-chip" style="padding:7px 10px;text-align:center;flex:1;min-width:60px;border-right:1px solid var(--border);">
+      <div class="stat-num" id="sHoy" style="font-size:16px;color:var(--p2)">0</div><div class="stat-lbl">Hoy</div></div>
+    <div class="stat-chip" style="padding:7px 10px;text-align:center;flex:1;min-width:60px;border-right:1px solid var(--border);">
+      <div class="stat-num" id="sRecurr" style="font-size:16px;color:var(--purple)">0</div><div class="stat-lbl">Recurrentes</div></div>
+    <div class="stat-chip" style="padding:7px 10px;text-align:center;flex:1;min-width:60px;">
+      <div class="stat-num" id="sDone" style="font-size:16px;color:var(--sage)">0</div><div class="stat-lbl">Listas ✓</div></div>
+  </div>
+
+  <!-- sort -->
+  <div class="sort-bar">
+    <span class="sort-label">Ver:</span>
+    <button class="sort-btn active" id="sort-deadline"  onclick="setSort('deadline')">Deadline</button>
+    <button class="sort-btn"        id="sort-prioridad" onclick="setSort('prioridad')">Prioridad</button>
+    <button class="sort-btn"        id="sort-horario"   onclick="setSort('horario')">Horario</button>
+    <button class="sort-btn"        id="sort-contexto"  onclick="setSort('contexto')">Contexto</button>
+  </div>
+
+  <!-- context filter -->
+  <div style="display:flex;gap:6px;padding:8px 14px;background:var(--bg);overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);" id="ctxFilterRow">
+    <div class="sort-btn active" id="cf-todo"  onclick="setCF('todo')" style="white-space:nowrap">Todo</div>
+    <div class="sort-btn"        id="cf-casa"  onclick="setCF('casa')" style="white-space:nowrap">🏠 Casa</div>
+    <div class="sort-btn"        id="cf-bazar" onclick="setCF('bazar')" style="white-space:nowrap">🛍️ Bazar</div>
+    <div class="sort-btn"        id="cf-club"  onclick="setCF('club')" style="white-space:nowrap">🟢 Club Patio</div>
+  </div>
+
+  <div style="padding:12px 14px;" id="taskList"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 · SPRINT + MATRIZ
+════════════════════════════════════════ -->
+<div class="page" id="pg-sprint">
+  <div style="padding:14px 14px 0;">
+
+    <!-- Sprint -->
+    <div class="card">
+      <div class="card-title">
+        <span>⚡ Sprint Semanal</span>
+        <button class="btn btn-sage btn-sm" onclick="addToSprint()">+ Agregar</button>
+      </div>
+      <div class="sprint-bar-wrap"><div class="sprint-bar-fill" id="sprintFill" style="width:0%"></div></div>
+      <div style="font-size:11px;color:var(--mid);margin-bottom:12px" id="sprintStats">0 / 0 completadas</div>
+      <div id="sprintList"></div>
+    </div>
+
+    <!-- Prioridades Eisenhower -->
+    <div class="card">
+      <div class="card-title"><span>🎯 Matriz de Prioridades</span><span class="card-sub">Eisenhower</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;font-size:10px;font-weight:700;text-align:center;color:var(--mid);margin-bottom:4px;">
+        <span>🔥 URGENTE</span><span>🌱 NO URGENTE</span>
+      </div>
+      <div class="matrix-grid" id="matrixGrid"></div>
+    </div>
+
+    <!-- Metas -->
+    <div class="card">
+      <div class="card-title"><span>🏆 Metas Auto-impuestas</span><span class="card-sub">Club Patio</span></div>
+      <div id="goalsContainer"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 · EQUIPO
+════════════════════════════════════════ -->
+<div class="page" id="pg-equipo">
+  <div style="padding:14px 14px 0;">
+
+    <div class="card">
+      <div class="card-title"><span>👥 Panel del Equipo</span><span class="card-sub">3–5 personas</span></div>
+      <div class="team-grid" id="teamGrid"></div>
+    </div>
+
+    <!-- Check-in semanal -->
+    <div class="card">
+      <div class="card-title">📋 Check-in Semanal · Compromisos</div>
+      <div id="checkinList"></div>
+      <div style="margin-top:10px;display:flex;gap:8px;">
+        <input class="meta-select" type="text" id="checkinInput" placeholder="Compromiso del equipo esta semana…" style="flex:1;font-size:12px;">
+        <button class="btn btn-sage btn-sm" onclick="addCheckin()">Agregar</button>
+      </div>
+    </div>
+
+    <!-- Protocolo activación -->
+    <div class="card">
+      <div class="card-title">🎯 Protocolo de Activación · Talento Joven</div>
+      <ul class="tip-list">
+        <li><span class="tip-icon">⚡</span><div><strong>Check-in lunes (15 min):</strong> cada persona dice UNA cosa que completará esta semana. Regístrala arriba. Sin ambigüedad.</div></li>
+        <li><span class="tip-icon">🏅</span><div><strong>Reconocimiento visible:</strong> nombra públicamente cada vez que alguien completa algo. La dopamina del reconocimiento refuerza el hábito mejor que cualquier incentivo económico.</div></li>
+        <li><span class="tip-icon">🔴</span><div><strong>Regla de las 48h:</strong> tarea sin avance en 2 días = check automático. No para presionar, para <em>desbloquear</em>. La pregunta es "¿qué necesitas?" no "¿por qué no?"</div></li>
+        <li><span class="tip-icon">🎮</span><div><strong>Sprint ≤ 3 días:</strong> el cerebro joven necesita ciclos de recompensa cortos. Tareas grandes = desglose obligatorio en pasos de máximo 3 días.</div></li>
+        <li><span class="tip-icon">🌱</span><div><strong>Autonomía con marcos:</strong> dales el QUÉ y el CUÁNDO. No el CÓMO. El talento florece cuando tiene control sobre su proceso dentro de límites claros.</div></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 4 · COACH
+════════════════════════════════════════ -->
+<div class="page" id="pg-coach">
+  <div style="padding:14px 14px 0;">
+
+    <!-- ══ EVALUACIÓN SEMANAL DE ÁNIMO ══ -->
+    <div class="card" id="moodCard">
+      <div class="card-title">
+        <span>🌡️ Evaluación Semanal de Ánimo</span>
+        <span class="card-sub" id="moodDateBadge"></span>
+      </div>
+
+      <!-- progress pips -->
+      <div class="mood-progress" id="moodPips"></div>
+
+      <!-- STEPS -->
+      <div id="moodSteps">
+        <!-- Q1 -->
+        <div class="mood-step active" id="mstep-0">
+          <div class="mood-question">¿Cómo describirías tu energía ahora mismo?</div>
+          <div class="mood-sub">Sin juzgarte. Solo observa cómo estás al empezar el día.</div>
+          <div class="mood-options">
+            <div class="mood-opt" onclick="selectOpt(0,5,this)"><span class="mood-opt-emoji">⚡</span><span class="mood-opt-text">Con energía, lista para atacar</span><span class="mood-opt-val">+5</span></div>
+            <div class="mood-opt" onclick="selectOpt(0,3,this)"><span class="mood-opt-emoji">🌤️</span><span class="mood-opt-text">Regular, puedo funcionar</span><span class="mood-opt-val">+3</span></div>
+            <div class="mood-opt" onclick="selectOpt(0,1,this)"><span class="mood-opt-emoji">😶</span><span class="mood-opt-text">Flat, sin motivación clara</span><span class="mood-opt-val">+1</span></div>
+            <div class="mood-opt" onclick="selectOpt(0,0,this)"><span class="mood-opt-emoji">🪫</span><span class="mood-opt-text">Agotada, no quiero empezar</span><span class="mood-opt-val">0</span></div>
+          </div>
+          <div class="mood-nav"><button class="btn btn-sage" onclick="nextStep(1)" style="flex:1">Siguiente →</button></div>
+        </div>
+        <!-- Q2 -->
+        <div class="mood-step" id="mstep-1">
+          <div class="mood-question">¿Qué emoción predomina esta mañana?</div>
+          <div class="mood-sub">La emoción que sientes sin que nadie te pregunte cómo estás.</div>
+          <div class="mood-options">
+            <div class="mood-opt" onclick="selectOpt(1,5,this)"><span class="mood-opt-emoji">🔥</span><span class="mood-opt-text">Entusiasmo — quiero avanzar</span><span class="mood-opt-val">+5</span></div>
+            <div class="mood-opt" onclick="selectOpt(1,4,this)"><span class="mood-opt-emoji">😌</span><span class="mood-opt-text">Tranquilidad — enfocada</span><span class="mood-opt-val">+4</span></div>
+            <div class="mood-opt" onclick="selectOpt(1,2,this)"><span class="mood-opt-emoji">😟</span><span class="mood-opt-text">Ansiedad — demasiado por hacer</span><span class="mood-opt-val">+2</span></div>
+            <div class="mood-opt" onclick="selectOpt(1,1,this)"><span class="mood-opt-emoji">😔</span><span class="mood-opt-text">Frustración — siento que no avanza</span><span class="mood-opt-val">+1</span></div>
+            <div class="mood-opt" onclick="selectOpt(1,0,this)"><span class="mood-opt-emoji">😶‍🌫️</span><span class="mood-opt-text">Bloqueo — no sé por dónde empezar</span><span class="mood-opt-val">0</span></div>
+          </div>
+          <div class="mood-nav">
+            <button class="btn btn-ghost" onclick="prevStep(0)" style="flex:1">← Atrás</button>
+            <button class="btn btn-sage" onclick="nextStep(2)" style="flex:1">Siguiente →</button>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="mood-step" id="mstep-2">
+          <div class="mood-question">¿Qué tan clara tienes tu prioridad número 1 hoy?</div>
+          <div class="mood-sub">No lo que DEBERÍAS hacer. Lo que SABES que mueve el Club hoy.</div>
+          <div class="mood-options">
+            <div class="mood-opt" onclick="selectOpt(2,5,this)"><span class="mood-opt-emoji">🎯</span><span class="mood-opt-text">Clarísima — sé exactamente qué hacer</span><span class="mood-opt-val">+5</span></div>
+            <div class="mood-opt" onclick="selectOpt(2,3,this)"><span class="mood-opt-emoji">🤔</span><span class="mood-opt-text">Más o menos — hay 2 o 3 opciones</span><span class="mood-opt-val">+3</span></div>
+            <div class="mood-opt" onclick="selectOpt(2,1,this)"><span class="mood-opt-emoji">🌫️</span><span class="mood-opt-text">Confusa — todo parece urgente</span><span class="mood-opt-val">+1</span></div>
+            <div class="mood-opt" onclick="selectOpt(2,0,this)"><span class="mood-opt-emoji">❓</span><span class="mood-opt-text">Sin idea — estoy paralizada</span><span class="mood-opt-val">0</span></div>
+          </div>
+          <div class="mood-nav">
+            <button class="btn btn-ghost" onclick="prevStep(1)" style="flex:1">← Atrás</button>
+            <button class="btn btn-sage" onclick="nextStep(3)" style="flex:1">Siguiente →</button>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="mood-step" id="mstep-3">
+          <div class="mood-question">¿Cómo sientes el ambiente del equipo esta semana?</div>
+          <div class="mood-sub">Tu percepción como líder, aunque no hayas hablado con todos aún.</div>
+          <div class="mood-options">
+            <div class="mood-opt" onclick="selectOpt(3,5,this)"><span class="mood-opt-emoji">🤝</span><span class="mood-opt-text">Activado — hay energía y compromiso</span><span class="mood-opt-val">+5</span></div>
+            <div class="mood-opt" onclick="selectOpt(3,3,this)"><span class="mood-opt-emoji">😐</span><span class="mood-opt-text">Neutro — funcionan pero sin chispa</span><span class="mood-opt-val">+3</span></div>
+            <div class="mood-opt" onclick="selectOpt(3,1,this)"><span class="mood-opt-emoji">😓</span><span class="mood-opt-text">Tenso — hay fricción o demoras</span><span class="mood-opt-val">+1</span></div>
+            <div class="mood-opt" onclick="selectOpt(3,0,this)"><span class="mood-opt-emoji">🚨</span><span class="mood-opt-text">Crítico — necesita atención urgente</span><span class="mood-opt-val">0</span></div>
+          </div>
+          <div class="mood-nav">
+            <button class="btn btn-ghost" onclick="prevStep(2)" style="flex:1">← Atrás</button>
+            <button class="btn btn-sage" onclick="nextStep(4)" style="flex:1">Siguiente →</button>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="mood-step" id="mstep-4">
+          <div class="mood-question">¿Qué te robó más energía la semana pasada?</div>
+          <div class="mood-sub">Honestidad total. Esto es solo para ti.</div>
+          <div class="mood-options">
+            <div class="mood-opt" onclick="selectOpt(4,4,this)"><span class="mood-opt-emoji">🔄</span><span class="mood-opt-text">Tareas operativas que no delegué</span><span class="mood-opt-val">+4</span></div>
+            <div class="mood-opt" onclick="selectOpt(4,3,this)"><span class="mood-opt-emoji">💬</span><span class="mood-opt-text">Gestión del equipo / conflictos</span><span class="mood-opt-val">+3</span></div>
+            <div class="mood-opt" onclick="selectOpt(4,2,this)"><span class="mood-opt-emoji">😰</span><span class="mood-opt-text">Incertidumbre / no saber qué priorizar</span><span class="mood-opt-val">+2</span></div>
+            <div class="mood-opt" onclick="selectOpt(4,1,this)"><span class="mood-opt-emoji">🏠</span><span class="mood-opt-text">Mezcla casa-trabajo difícil de separar</span><span class="mood-opt-val">+1</span></div>
+            <div class="mood-opt" onclick="selectOpt(4,0,this)"><span class="mood-opt-emoji">😴</span><span class="mood-opt-text">Agotamiento físico / falta de descanso</span><span class="mood-opt-val">0</span></div>
+          </div>
+          <div class="mood-nav">
+            <button class="btn btn-ghost" onclick="prevStep(3)" style="flex:1">← Atrás</button>
+            <button class="btn btn-sage" onclick="calcMood()" style="flex:1">Ver mi perfil →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="mood-result" id="moodResult">
+        <div class="profile-badge" id="profileBadge">
+          <div class="profile-emoji" id="profileEmoji"></div>
+          <div class="profile-name" id="profileName"></div>
+          <div class="profile-sub" id="profileSub"></div>
+          <div class="profile-desc" id="profileDesc"></div>
+        </div>
+
+        <div style="font-size:12px;font-weight:700;color:var(--mid);letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px;">⚡ Activadores de dopamina recomendados</div>
+        <ul class="tip-list" id="dopamineList"></ul>
+
+        <div style="font-size:12px;font-weight:700;color:var(--mid);letter-spacing:.07em;text-transform:uppercase;margin:12px 0 8px;">🎯 Ajuste de prioridades sugerido</div>
+        <div id="priorityAdjust" style="font-size:13px;line-height:1.6;padding:12px;background:var(--bg);border-radius:9px;border:1px solid var(--border);"></div>
+
+        <div style="display:flex;gap:8px;margin-top:14px;">
+          <button class="btn btn-sage" onclick="saveMoodHistory()" style="flex:1">💾 Guardar evaluación</button>
+          <button class="btn btn-ghost" onclick="resetMood()" style="flex:1">🔄 Repetir</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historial de ánimo -->
+    <div class="card" id="moodHistoryCard" style="display:none;">
+      <div class="card-title"><span>📈 Historial de Ánimo</span><button class="btn btn-ghost btn-sm" onclick="clearHistory()">Limpiar</button></div>
+      <div id="moodHistoryList"></div>
+    </div>
+
+    <!-- Diagnóstico -->
+    <div class="coach-hero">
+      <div class="coach-eyebrow">Diagnóstico · Tu patrón de trabajo</div>
+      <div class="coach-msg">"Te pierdes en detalles operativos. Eso tiene nombre: <strong style="color:#E8A87C">trampa del hacer</strong>. Eres tan capaz que terminas resolviendo lo que deberían resolver otros. Este sistema rompe ese patrón."</div>
+      <div class="coach-chips">
+        <span class="coach-chip">Liderazgo delegador</span>
+        <span class="coach-chip">Psicología organizacional</span>
+        <span class="coach-chip">Neurogestión</span>
+        <span class="coach-chip">Metodología ágil</span>
+      </div>
+    </div>
+
+    <!-- Método 1-3-5 -->
+    <div class="card">
+      <div class="card-title">⚡ Método 1-3-5 · Cada día</div>
+      <div class="m135-grid">
+        <div class="m135-item m135-g">
+          <div class="m135-label">1 TAREA GRANDE</div>
+          <div class="m135-desc">Mueve el Club significativamente. Ej: cerrar nuevo comercio, lanzar campaña, presentar a Corfo.</div>
+        </div>
+        <div class="m135-item m135-m">
+          <div class="m135-label">3 TAREAS MEDIANAS</div>
+          <div class="m135-desc">Avances concretos. Ej: responder propuestas, revisar reporte, coordinar equipo, revisar métricas.</div>
+        </div>
+        <div class="m135-item m135-p">
+          <div class="m135-label">5 TAREAS PEQUEÑAS</div>
+          <div class="m135-desc">Operativo rápido. Ej: responder WA, confirmar hora, enviar archivo, actualizar planilla bazar.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Escenarios difíciles -->
+    <div class="card">
+      <div class="card-title">🚨 Escenarios Difíciles · Guía de respuesta</div>
+      <div id="scenarioList"></div>
+    </div>
+
+    <!-- Los 3 cambios -->
+    <div class="card">
+      <div class="card-title">🧠 Los 3 cambios de alto impacto</div>
+      <ul class="tip-list">
+        <li><span class="tip-icon">1.</span><div><strong>Delega el proceso, no solo la tarea.</strong> En vez de "haz el post", di: "eres dueño del Instagram esta semana, aquí el master prompt, entrega el jueves." La responsabilidad completa activa otro nivel de compromiso en personas jóvenes.</div></li>
+        <li><span class="tip-icon">2.</span><div><strong>Tu trabajo es decidir, no ejecutar.</strong> Cada vez que hagas algo operativo, pregúntate: ¿quién del equipo puede aprender esto? Esa delegación es tu trabajo estratégico real.</div></li>
+        <li><span class="tip-icon">3.</span><div><strong>Primera hora del día = estrategia.</strong> Bloquea 9–10 AM para pensar el Club, no para reaccionar a mensajes. Lo urgente de WhatsApp puede esperar 60 minutos. Tu lucidez matutina vale más que la reactividad.</div></li>
+      </ul>
+    </div>
+
+    <!-- Compromisos Patio contextualizados -->
+    <div class="card" style="background:var(--sage-dim);border-color:var(--club-border);">
+      <div class="card-title">🎯 Compromisos activos · Gestión Patio Curauma</div>
+      <ul class="tip-list">
+        <li><span class="tip-icon">📲</span><div><strong>Campaña WhatsApp:</strong> 293 usuarios en 7 grupos. Tú defines el mensaje, el equipo ejecuta el envío por segmento. Delega el proceso.</div></li>
+        <li><span class="tip-icon">📸</span><div><strong>Instagram automatizado:</strong> master prompt listo. Asigna a una persona por sprint. Tu rol: aprobar, no crear.</div></li>
+        <li><span class="tip-icon">🏪</span><div><strong>Nuevos comercios:</strong> meta visible para el equipo. Cada cierre = celebración grupal. Usa la mecánica del Club dentro del equipo.</div></li>
+        <li><span class="tip-icon">📊</span><div><strong>Expansión Quilpué / Villa Alemana:</strong> tarea estratégica exclusivamente tuya. Bloquea 2h/semana, sin interrupciones.</div></li>
+        <li><span class="tip-icon">🏛️</span><div><strong>Corfo Consolida 2026:</strong> seguimiento mensual de hitos. Delegar documentación de avance al equipo con template fijo.</div></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav">
+  <button class="nav-item active" id="nav-tareas"  onclick="showPage('tareas')"><span class="nav-icon">📋</span><span class="nav-label">Tareas</span></button>
+  <button class="nav-item"        id="nav-sprint"  onclick="showPage('sprint')"><span class="nav-icon">⚡</span><span class="nav-label">Sprint</span></button>
+  <button class="nav-item"        id="nav-equipo"  onclick="showPage('equipo')"><span class="nav-icon">👥</span><span class="nav-label">Equipo</span></button>
+  <button class="nav-item"        id="nav-coach"   onclick="showPage('coach')"><span class="nav-icon">🧠</span><span class="nav-label">Coach</span></button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════ STATE ═══════════════
+const SK  = 'carolina_v4_tasks';
+const SKS = 'carolina_v4_sprint';
+const SKC = 'carolina_v4_checkin';
+let tasks=[], sprintTasks=[], checkins=[];
+let ctxFilter='todo', sortBy='deadline', freq='unica';
+
+const CTX_MAP={
+  casa: {label:'🏠 Casa',         tagClass:'tag-ctx-casa',  cardClass:'ctx-casa'},
+  bazar:{label:'🛍️ Bazar·Tienda', tagClass:'tag-ctx-bazar', cardClass:'ctx-bazar'},
+  club: {label:'🟢 Club Patio',   tagClass:'tag-ctx-club',  cardClass:'ctx-club'},
+};
+const PRIO_MAP={
+  p1:{label:'🔴 Urgente',     tagClass:'tag-p1',order:1},
+  p2:{label:'🟡 Alta',        tagClass:'tag-p2',order:2},
+  p3:{label:'🔵 Normal',      tagClass:'tag-p3',order:3},
+  p4:{label:'⚪ Cuando pueda',tagClass:'tag-p4',order:4},
+};
+const FREQ_MAP={
+  unica: {label:'',           icon:''},
+  diaria:{label:'🔁 Diaria',  icon:'🔁'},
+  semanal:{label:'📆 Semanal',icon:'📆'},
+  casual:{label:'✦ Casual',  icon:'✦'},
+};
+
+// ═══════════════ STORAGE (Firestore en la nube) ═══════════════
+// Los datos del usuario se cargan desde Firestore en applyCloudData() antes
+// de llamar a load(); aquí solo sembramos datos de inicio si está vacío.
+function load(){
+  if(!tasks.length) seedTasks();
+  if(!sprintTasks.length) seedSprint();
+  if(!checkins.length) seedCheckins();
+}
+// Recibe el documento del usuario desde la nube y rellena el estado en memoria.
+function applyCloudData(d){
+  d = d || {};
+  tasks       = Array.isArray(d.tasks)    ? d.tasks    : [];
+  sprintTasks = Array.isArray(d.sprint)   ? d.sprint   : [];
+  checkins    = Array.isArray(d.checkins) ? d.checkins : [];
+  moodHistory = Array.isArray(d.mood)     ? d.mood     : [];
+}
+function saveTasks(){    window.cloudSet && window.cloudSet('tasks', tasks); }
+function saveSprint(){   window.cloudSet && window.cloudSet('sprint', sprintTasks); }
+function saveCheckins(){ window.cloudSet && window.cloudSet('checkins', checkins); }
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+function seedTasks(){
+  const n=new Date();
+  const d=o=>{const x=new Date(n);x.setDate(x.getDate()+o);return x.toISOString().split('T')[0];};
+  tasks=[
+    {id:uid(),text:'Preparar despachos tienda colaborativa',ctx:'bazar',prio:'p1',freq:'unica',deadline:d(0),time:'10:00',dur:60,done:false,ts:Date.now()-8},
+    {id:uid(),text:'Enviar campaña WhatsApp segmento VIP',ctx:'club',prio:'p1',freq:'unica',deadline:d(1),time:'09:00',dur:45,done:false,ts:Date.now()-7},
+    {id:uid(),text:'Pagar cuenta de luz',ctx:'casa',prio:'p2',freq:'unica',deadline:d(2),time:'',dur:0,done:false,ts:Date.now()-6},
+    {id:uid(),text:'Publicar posts semana Instagram Club Patio',ctx:'club',prio:'p2',freq:'semanal',deadline:d(3),time:'11:00',dur:90,done:false,ts:Date.now()-5},
+    {id:uid(),text:'Revisión stock bazar · inventario',ctx:'bazar',prio:'p2',freq:'semanal',deadline:d(5),time:'15:00',dur:60,done:false,ts:Date.now()-4},
+    {id:uid(),text:'Chequear métricas app Club Patio',ctx:'club',prio:'p3',freq:'diaria',deadline:'',time:'08:30',dur:15,done:false,ts:Date.now()-3},
+    {id:uid(),text:'Reunión nuevos comercios Quilpué',ctx:'club',prio:'p2',freq:'unica',deadline:d(8),time:'14:00',dur:120,done:false,ts:Date.now()-2},
+    {id:uid(),text:'Comprar materiales aseo casa',ctx:'casa',prio:'p4',freq:'casual',deadline:'',time:'',dur:0,done:false,ts:Date.now()-1},
+  ];
+  saveTasks();
+}
+function seedSprint(){
+  sprintTasks=[
+    {id:uid(),text:'Enviar campaña WhatsApp segmento VIP',owner:'Carolina',prio:'p1',done:false},
+    {id:uid(),text:'Publicar posts semana Instagram',owner:'Team B',prio:'p2',done:false},
+    {id:uid(),text:'Chequear métricas app',owner:'Carolina',prio:'p3',done:true},
+  ];
+  saveSprint();
+}
+function seedCheckins(){
+  checkins=[
+    {id:uid(),text:'Team A: cerrar 2 comercios nuevos esta semana',done:false},
+    {id:uid(),text:'Team B: publicar 3 posts Instagram programados',done:false},
+    {id:uid(),text:'Team C: responder todas las consultas WA en <24h',done:false},
+  ];
+  saveCheckins();
+}
+
+// ═══════════════ NAV ═══════════════
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('pg-'+p).classList.add('active');
+  document.getElementById('nav-'+p).classList.add('active');
+  if(p==='sprint'){renderSprint();renderMatrix();renderGoals();}
+  if(p==='equipo'){renderTeam();renderCheckins();}
+  if(p==='coach'){renderScenarios();initMoodUI();}
+  window.scrollTo(0,0);
+}
+
+// ═══════════════ FREQ ═══════════════
+function setFreq(f){
+  freq=f;
+  ['unica','diaria','semanal','casual'].forEach(k=>{
+    document.getElementById('freq-'+k).classList.toggle('sel',k===f);
+  });
+  document.getElementById('rowDeadline').style.display=f==='diaria'?'none':'flex';
+}
+
+// ═══════════════ TASKS ═══════════════
+function addTask(){
+  const input=document.getElementById('captureInput');
+  const text=input.value.trim();
+  if(!text){input.focus();return;}
+  const dur=parseInt(document.getElementById('metaDur').value)||0;
+  tasks.unshift({
+    id:uid(),text,
+    ctx:document.getElementById('metaCtx').value,
+    prio:document.getElementById('metaPrio').value,
+    freq,
+    deadline:freq==='diaria'?'':document.getElementById('metaDate').value,
+    time:document.getElementById('metaTime').value,
+    dur,done:false,ts:Date.now(),
+  });
+  saveTasks(); input.value=''; input.focus();
+  renderTasks(); toast('✅ Tarea anotada');
+}
+function toggleDone(id){
+  const t=tasks.find(t=>t.id===id);
+  if(!t)return; t.done=!t.done; saveTasks(); renderTasks();
+  if(t.done) toast('✓ '+t.text.slice(0,28)+(t.text.length>28?'…':''));
+}
+function deleteTask(id){
+  tasks=tasks.filter(t=>t.id!==id); saveTasks(); renderTasks(); toast('🗑️ Eliminada');
+}
+
+// ═══════════════ FILTER / SORT ═══════════════
+function setCF(f){
+  ctxFilter=f;
+  ['todo','casa','bazar','club'].forEach(k=>{
+    const el=document.getElementById('cf-'+k);
+    el.classList.toggle('active',k===f);
+  });
+  renderTasks();
+}
+function setSort(s){
+  sortBy=s;
+  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sort-'+s).classList.add('active');
+  renderTasks();
+}
+
+// ═══════════════ RENDER TASKS ═══════════════
+function durLabel(m){if(!m)return'';if(m<60)return m+'min';const h=Math.floor(m/60),r=m%60;return r?`${h}h${r}m`:`${h}h`;}
+
+function renderTasks(){
+  const today=new Date(); today.setHours(0,0,0,0);
+  let list=tasks.filter(t=>ctxFilter==='todo'||t.ctx===ctxFilter);
+  list=[...list].sort((a,b)=>{
+    if(sortBy==='deadline'){
+      if(a.done!==b.done)return a.done?1:-1;
+      if(!a.deadline&&!b.deadline)return b.ts-a.ts;
+      if(!a.deadline)return 1; if(!b.deadline)return -1;
+      return a.deadline.localeCompare(b.deadline);
+    }
+    if(sortBy==='prioridad'){
+      if(a.done!==b.done)return a.done?1:-1;
+      return(PRIO_MAP[a.prio]?.order||9)-(PRIO_MAP[b.prio]?.order||9);
+    }
+    if(sortBy==='horario'){
+      if(a.done!==b.done)return a.done?1:-1;
+      if(!a.time&&!b.time)return b.ts-a.ts;
+      if(!a.time)return 1; if(!b.time)return -1;
+      return a.time.localeCompare(b.time);
+    }
+    if(sortBy==='contexto'){
+      if(a.done!==b.done)return a.done?1:-1;
+      return a.ctx.localeCompare(b.ctx);
+    }
+    return b.ts-a.ts;
+  });
+
+  const pending=tasks.filter(t=>!t.done);
+  document.getElementById('sTodo').textContent=pending.length;
+  document.getElementById('sUrgente').textContent=pending.filter(t=>t.prio==='p1').length;
+  document.getElementById('sHoy').textContent=pending.filter(t=>{
+    if(!t.deadline)return false;
+    return new Date(t.deadline+'T00:00:00')<=today;
+  }).length;
+  document.getElementById('sRecurr').textContent=pending.filter(t=>t.freq&&t.freq!=='unica').length;
+  document.getElementById('sDone').textContent=tasks.filter(t=>t.done).length;
+
+  const c=document.getElementById('taskList'); c.innerHTML='';
+  if(!list.length){c.innerHTML='<div class="empty-state">✨ Sin tareas aquí. Anota la primera arriba.</div>';return;}
+
+  const mkSec=(lbl,n)=>{const d=document.createElement('div');d.className='section-header';d.innerHTML=`<div class="section-label">${lbl}</div><span class="section-count">${n}</span>`;return d;};
+
+  if(sortBy==='horario'){
+    const wt=list.filter(t=>!t.done&&t.time), wo=list.filter(t=>!t.done&&!t.time), dn=list.filter(t=>t.done);
+    if(wt.length){c.appendChild(mkSec('⏰ Con horario',wt.length)); wt.forEach(t=>c.appendChild(mkCard(t,today)));}
+    if(wo.length){c.appendChild(mkSec('⚪ Sin horario',wo.length)); wo.forEach(t=>c.appendChild(mkCard(t,today)));}
+    if(dn.length){c.appendChild(mkSec('✓ Completadas',dn.length)); dn.forEach(t=>c.appendChild(mkCard(t,today)));}
+  } else if(sortBy==='contexto'&&ctxFilter==='todo'){
+    ['casa','bazar','club'].forEach(ctx=>{
+      const g=list.filter(t=>t.ctx===ctx); if(!g.length)return;
+      c.appendChild(mkSec(CTX_MAP[ctx].label,g.filter(t=>!t.done).length));
+      g.forEach(t=>c.appendChild(mkCard(t,today)));
+    });
+  } else if(sortBy==='deadline'){
+    const ov=list.filter(t=>!t.done&&t.deadline&&new Date(t.deadline+'T00:00:00')<today);
+    const td=list.filter(t=>!t.done&&t.deadline&&new Date(t.deadline+'T00:00:00').getTime()===today.getTime());
+    const sw=list.filter(t=>{if(t.done||!t.deadline)return false;const diff=(new Date(t.deadline+'T00:00:00')-today)/86400000;return diff>0&&diff<=7;});
+    const la=list.filter(t=>{if(t.done||!t.deadline)return false;return(new Date(t.deadline+'T00:00:00')-today)/86400000>7;});
+    const nd=list.filter(t=>!t.done&&!t.deadline), dn=list.filter(t=>t.done);
+    if(ov.length){c.appendChild(mkSec('🚨 Vencidas',ov.length)); ov.forEach(t=>c.appendChild(mkCard(t,today)));}
+    if(td.length){c.appendChild(mkSec('📅 Hoy',td.length)); td.forEach(t=>c.appendChild(mkCard(t,today)));}
+    if(sw.length){c.appendChild(mkSec('⏳ Esta semana',sw.length)); sw.forEach(t=>c.appendChild(mkCard(t,today)));}
+    if(la.length){c.appendChild(mkSec('📆 Más adelante',la.length)); la.forEach(t=>c.appendChild(mkCard(t,today)));}
+    if(nd.length){c.appendChild(mkSec('🔁 Sin fecha fija',nd.length)); nd.forEach(t=>c.appendChild(mkCard(t,today)));}
+    if(dn.length){c.appendChild(mkSec('✓ Completadas',dn.length)); dn.forEach(t=>c.appendChild(mkCard(t,today)));}
+  } else {
+    list.forEach(t=>c.appendChild(mkCard(t,today)));
+  }
+  c.insertAdjacentHTML('beforeend','<div class="swipe-hint">Toca el círculo para marcar · × para eliminar</div>');
+}
+
+function mkCard(t,today){
+  const card=document.createElement('div');
+  const ctx=CTX_MAP[t.ctx]||CTX_MAP.club;
+  const prio=PRIO_MAP[t.prio]||PRIO_MAP.p3;
+  const finfo=FREQ_MAP[t.freq]||FREQ_MAP.unica;
+  let dlTag='',isOv=false;
+  if(t.deadline){
+    const dl=new Date(t.deadline+'T00:00:00');
+    const diff=Math.round((dl-today)/86400000);
+    let cls='tag-deadline',lbl='';
+    if(diff<0){cls+=' overdue';lbl=`Venció hace ${Math.abs(diff)}d`;isOv=true;}
+    else if(diff===0){cls+=' soon';lbl='Hoy';}
+    else if(diff===1){cls+=' soon';lbl='Mañana';}
+    else if(diff<=3){cls+=' soon';lbl=`En ${diff} días`;}
+    else{lbl=dl.toLocaleDateString('es-CL',{day:'numeric',month:'short'});}
+    dlTag=`<span class="${cls}">📅 ${lbl}</span>`;
+  }
+  let timeLine='';
+  if(t.time||t.dur){
+    const p=[];
+    if(t.time)p.push(`<span class="time-chip">⏰ ${t.time}</span>`);
+    if(t.dur)p.push(`<span class="time-chip">⏱ ${durLabel(t.dur)}</span>`);
+    timeLine=`<div class="task-time-line">${p.join('')}</div>`;
+  }
+  const freqTag=finfo.label?`<span class="tag tag-freq">${finfo.label}</span>`:'';
+  card.className=`task-card ${ctx.cardClass}${t.done?' done':''}${isOv&&!t.done?' overdue':''}`;
+  card.innerHTML=`
+    <div class="task-check ${t.done?'checked':''}" onclick="toggleDone('${t.id}')">${t.done?'✓':''}</div>
+    <div class="task-body">
+      <div class="task-text">${t.text}</div>
+      ${timeLine}
+      <div class="task-tags">
+        <span class="tag ${ctx.tagClass}">${ctx.label}</span>
+        <span class="tag ${prio.tagClass}">${prio.label}</span>
+        ${freqTag}${dlTag}
+      </div>
+    </div>
+    <button class="task-del" onclick="deleteTask('${t.id}')">×</button>`;
+  return card;
+}
+
+// ═══════════════ SPRINT ═══════════════
+function renderSprint(){
+  const done=sprintTasks.filter(t=>t.done).length;
+  const pct=sprintTasks.length?Math.round(done/sprintTasks.length*100):0;
+  document.getElementById('sprintFill').style.width=pct+'%';
+  document.getElementById('sprintStats').textContent=`${done} / ${sprintTasks.length} completadas · ${pct}% del sprint`;
+  const c=document.getElementById('sprintList'); c.innerHTML='';
+  sprintTasks.forEach((t,i)=>{
+    const pc=t.prio==='p1'?'tag-p1':t.prio==='p2'?'tag-p2':t.prio==='p3'?'tag-p3':'tag-p4';
+    const pl=PRIO_MAP[t.prio]?.label||'';
+    const el=document.createElement('div');
+    el.className='sprint-item'+(t.done?' done':'');
+    el.innerHTML=`
+      <div class="sprint-check ${t.done?'checked':''}" onclick="toggleSprint(${i})">${t.done?'✓':''}</div>
+      <div class="sprint-text">${t.text}</div>
+      <span class="sprint-owner">${t.owner}</span>
+      <span class="sprint-prio ${pc}">${pl}</span>`;
+    c.appendChild(el);
+  });
+}
+function toggleSprint(i){
+  sprintTasks[i].done=!sprintTasks[i].done;
+  saveSprint(); renderSprint();
+  if(sprintTasks[i].done) toast('🏅 ¡Tarea completada!');
+}
+function addToSprint(){
+  const pending=tasks.filter(t=>!t.done&&!sprintTasks.find(s=>s.text===t.text));
+  if(!pending.length){toast('Sin tareas pendientes para agregar');return;}
+  const next=pending[0];
+  sprintTasks.push({id:uid(),text:next.text,owner:'Carolina',prio:next.prio,done:false});
+  saveSprint(); renderSprint(); toast('⚡ Agregada al sprint');
+}
+
+// ═══════════════ MATRIX ═══════════════
+function renderMatrix(){
+  const today=new Date(); today.setHours(0,0,0,0);
+  const qs=[
+    {id:'q1',label:'🔥 Hacer YA',cls:'mc-q1',
+     filter:t=>t.prio==='p1'&&!t.done},
+    {id:'q2',label:'🌱 Planificar',cls:'mc-q2',
+     filter:t=>t.prio==='p2'&&!t.done},
+    {id:'q3',label:'⚡ Delegar',cls:'mc-q3',
+     filter:t=>t.prio==='p3'&&!t.done},
+    {id:'q4',label:'🗑️ Eliminar',cls:'mc-q4',
+     filter:t=>t.prio==='p4'&&!t.done},
+  ];
+  const grid=document.getElementById('matrixGrid'); grid.innerHTML='';
+  qs.forEach(q=>{
+    const cell=document.createElement('div');
+    cell.className=`matrix-cell ${q.cls}`;
+    const qts=tasks.filter(q.filter).slice(0,4);
+    cell.innerHTML=`<div class="matrix-label">${q.label}</div>`;
+    if(!qts.length) cell.innerHTML+=`<div style="font-size:10px;color:#aaa;font-style:italic;padding:4px 0;">Sin tareas</div>`;
+    qts.forEach(t=>{
+      const el=document.createElement('div');
+      el.className='m-task';
+      el.innerHTML=`<div class="m-dot"></div><span>${t.text}</span>`;
+      el.onclick=()=>{t.done=true;saveTasks();renderMatrix();toast('✅ '+t.text.slice(0,25)+'…');};
+      cell.appendChild(el);
+    });
+    grid.appendChild(cell);
+  });
+}
+
+// ═══════════════ METAS ═══════════════
+const GOALS=[
+  {title:'Activar 293 usuarios WhatsApp',kpi:'7 grupos segmentados enviados',pct:35,color:'var(--coral)',owner:'Carolina + Team A'},
+  {title:'50→65 comercios activos',kpi:'15 nuevos socios incorporados',pct:20,color:'var(--sage)',owner:'Team A'},
+  {title:'Automatizar Instagram',kpi:'Master prompt + API Graph activa',pct:60,color:'var(--purple)',owner:'Team B'},
+  {title:'Expansión Quilpué',kpi:'Plan lanzado + 5 comercios piloto',pct:10,color:'var(--gold)',owner:'Carolina'},
+  {title:'Postular Corfo Consolida 2026',kpi:'Documentación completa entregada',pct:80,color:'var(--bazar-color)',owner:'Carolina'},
+];
+function renderGoals(){
+  const c=document.getElementById('goalsContainer'); c.innerHTML='';
+  GOALS.forEach((g,i)=>{
+    const el=document.createElement('div');
+    el.className='meta-goal';
+    el.innerHTML=`
+      <div class="goal-header">
+        <div class="goal-num">${i+1}</div>
+        <div><div class="goal-title">${g.title}</div><div class="goal-owner">${g.owner}</div></div>
+      </div>
+      <div class="goal-bar-wrap"><div class="goal-bar" style="width:${g.pct}%;background:${g.color}"></div></div>
+      <div class="goal-pct">${g.pct}% completado</div>
+      <div class="goal-kpi">→ ${g.kpi}</div>`;
+    c.appendChild(el);
+  });
+}
+
+// ═══════════════ EQUIPO ═══════════════
+const TEAM=[
+  {name:'Team A',role:'Comercios & CRM',color:'#E84040',motivation:65,insight:'Necesita metas visibles y reconocimiento público. Celebra cada cierre.'},
+  {name:'Team B',role:'Contenido Digital',color:'#4A7B6F',motivation:80,insight:'Autonomía creativa = mejor rendimiento. Dale ownership del Instagram.'},
+  {name:'Team C',role:'Soporte & Ops',color:'#C9973A',motivation:55,insight:'Motivar con tareas de impacto visible. Asignar métricas propias.'},
+  {name:'Team D',role:'Marketing & Bazar',color:'#3A6FB5',motivation:70,insight:'Conectar con el propósito del Club. Rol clave en expansión Quilpué.'},
+];
+function renderTeam(){
+  const g=document.getElementById('teamGrid'); g.innerHTML='';
+  TEAM.forEach(m=>{
+    const tc=tasks.filter(t=>t.owner===m.name&&!t.done).length;
+    const el=document.createElement('div');
+    el.className='team-card';
+    el.innerHTML=`
+      <div class="team-avatar" style="background:${m.color}22;color:${m.color}">${m.name.split(' ')[1]}</div>
+      <div class="team-name">${m.name}</div>
+      <div class="team-role">${m.role}</div>
+      <div class="bar-wrap">
+        <div class="bar-label"><span>Motivación</span><span>${m.motivation}%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${m.motivation}%;background:${m.color}"></div></div>
+      </div>
+      <div class="team-tasks">📋 ${tc} tarea${tc!==1?'s':''} asignada${tc!==1?'s':''}</div>
+      <div class="team-insight">${m.insight}</div>`;
+    g.appendChild(el);
+  });
+}
+
+// ═══════════════ CHECK-IN ═══════════════
+function renderCheckins(){
+  const c=document.getElementById('checkinList'); c.innerHTML='';
+  if(!checkins.length){c.innerHTML='<div style="font-size:12px;color:var(--mid);padding:8px 0;">Sin compromisos anotados esta semana.</div>';return;}
+  checkins.forEach((ci,i)=>{
+    const el=document.createElement('div');
+    el.className='sprint-item'+(ci.done?' done':'');
+    el.innerHTML=`
+      <div class="sprint-check ${ci.done?'checked':''}" onclick="toggleCheckin(${i})">${ci.done?'✓':''}</div>
+      <div class="sprint-text" style="font-size:12px;">${ci.text}</div>
+      <button class="task-del" onclick="deleteCheckin(${i})">×</button>`;
+    c.appendChild(el);
+  });
+}
+function toggleCheckin(i){checkins[i].done=!checkins[i].done;saveCheckins();renderCheckins();}
+function deleteCheckin(i){checkins.splice(i,1);saveCheckins();renderCheckins();}
+function addCheckin(){
+  const inp=document.getElementById('checkinInput');
+  const text=inp.value.trim();
+  if(!text)return;
+  checkins.push({id:uid(),text,done:false});
+  saveCheckins(); inp.value=''; renderCheckins(); toast('✅ Compromiso anotado');
+}
+
+// ═══════════════ ESCENARIOS ═══════════════
+const SCENARIOS=[
+  {
+    title:'El equipo no entrega a tiempo',
+    badge:'🔴 Crítico', badgeCls:'s-red',
+    body:`<strong>Qué está pasando (psicología):</strong> las personas jóvenes no incumplen por pereza sino por claridad insuficiente o miedo a fallar.<br><br>
+    <strong>Respuesta en 3 pasos:</strong><br>
+    1. <strong>Pregunta, no acuses:</strong> "¿Qué necesitas para terminar esto?" activa colaboración. "¿Por qué no está listo?" activa defensa.<br>
+    2. <strong>Reduce el scope:</strong> si la tarea está atascada, córtala a la mitad. Entrega parcial > no entrega.<br>
+    3. <strong>Próximo sprint: desglose obligatorio.</strong> Tarea de más de 2 días = divide en sub-tareas de 1 día máximo.`
+  },
+  {
+    title:'Hay conflicto entre personas del equipo',
+    badge:'🟡 Importante', badgeCls:'s-yellow',
+    body:`<strong>Qué está pasando:</strong> roles mal definidos generan fricción. Dos personas que hacen lo mismo sin saberlo, o nadie sabe quién decide qué.<br><br>
+    <strong>Respuesta:</strong><br>
+    1. Reunión 1:1 con cada uno (no juntos primero). Escucha sin juzgar.<br>
+    2. Define en papel quién es dueño de cada área. Club Patio necesita que cada persona tenga su <em>territorio claro</em>.<br>
+    3. Regla de oro: el que tiene la responsabilidad tiene la última palabra en su área.`
+  },
+  {
+    title:'Bajón de motivación general del equipo',
+    badge:'🟡 Importante', badgeCls:'s-yellow',
+    body:`<strong>Señales:</strong> respuestas lentas, tareas incompletas sin aviso, energía baja en check-ins.<br><br>
+    <strong>Respuesta:</strong><br>
+    1. <strong>Conecta con el propósito:</strong> muéstrales el impacto real. "Esta semana procesamos X transacciones en el Club" es más motivador que "hay que subir posts."<br>
+    2. <strong>Victoria rápida colectiva:</strong> asigna una tarea pequeña que se pueda completar ese mismo día y celébrala en grupo.<br>
+    3. <strong>Pregunta individual:</strong> "¿Qué parte del trabajo te gusta más?" y reasigna en función de eso.`
+  },
+  {
+    title:'Tú misma estás atrapada en lo operativo',
+    badge:'🔵 Estratégico', badgeCls:'s-blue',
+    body:`<strong>Diagnóstico:</strong> la trampa del hacer. Hoy hay demasiado que depende solo de ti.<br><br>
+    <strong>Protocolo de salida:</strong><br>
+    1. Lista todo lo que hiciste en los últimos 3 días. Marca lo que SOLO tú podías hacer.<br>
+    2. Todo lo demás: asigna esta semana a alguien del equipo con instrucciones escritas.<br>
+    3. Bloquea mañana 9–10 AM como intocable. Solo estrategia. WhatsApp cerrado.<br>
+    4. Repite la semana siguiente. En 3 semanas habrás recuperado 5–8 horas semanales.`
+  },
+  {
+    title:'Un compromiso externo está en riesgo',
+    badge:'🔴 Crítico', badgeCls:'s-red',
+    body:`<strong>Compromisos activos:</strong> Corfo Consolida 2026, Sercotec Crece, socios del Club Patio.<br><br>
+    <strong>Respuesta inmediata:</strong><br>
+    1. <strong>Comunicación proactiva:</strong> avisa antes de que venza el plazo. Siempre. La transparencia salva relaciones.<br>
+    2. <strong>Propón alternativa concreta:</strong> no "me atrasé" sino "lo entrego el viernes con este alcance reducido."<br>
+    3. <strong>Internaliza:</strong> los compromisos del Club son la reputación del Club. Cada uno incumplido cuesta 10x más recuperarlo.`
+  },
+  {
+    title:'El equipo cumple pero sin iniciativa propia',
+    badge:'🟢 Crecimiento', badgeCls:'s-green',
+    body:`<strong>Qué está pasando:</strong> modo de ejecución puro. Hacen lo que se pide, no más. Es señal de que el equipo no se siente dueño.<br><br>
+    <strong>Respuesta:</strong><br>
+    1. En el próximo check-in pregunta: "¿Qué cambiarías tú del proceso?" Escucha de verdad.<br>
+    2. Implementa UNA de sus ideas (aunque sea pequeña). Eso activa ownership.<br>
+    3. Asigna un proyecto donde ellos definan el cómo. Pon tú el qué y el cuándo.<br>
+    4. La iniciativa propia no se exige: se cultiva dándoles terreno seguro para equivocarse.`
+  },
+];
+
+function renderScenarios(){
+  const c=document.getElementById('scenarioList'); c.innerHTML='';
+  SCENARIOS.forEach((s,i)=>{
+    const el=document.createElement('div');
+    el.className='scenario-card';
+    el.innerHTML=`
+      <div class="scenario-header" onclick="toggleScenario(${i})">
+        <div class="scenario-title">${s.title}</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="scenario-badge ${s.badgeCls}">${s.badge}</span>
+          <span class="chevron" id="chev-${i}">▼</span>
+        </div>
+      </div>
+      <div class="scenario-body" id="sb-${i}">${s.body}</div>`;
+    c.appendChild(el);
+  });
+}
+function toggleScenario(i){
+  const body=document.getElementById('sb-'+i);
+  const chev=document.getElementById('chev-'+i);
+  const open=body.classList.toggle('open');
+  chev.classList.toggle('open',open);
+}
+
+// ═══════════════ MOOD TEST ═══════════════
+const SKM = 'carolina_v4_mood';
+let moodAnswers = [null,null,null,null,null];
+let moodHistory = [];
+const TOTAL_STEPS = 5;
+
+const MOOD_PROFILES = {
+  alto: {
+    name:'🔥 Modo Potencia',
+    sub:'Dopamina alta · Liderazgo activo',
+    color:'#1F7A52', bg:'#E4F5EE', textColor:'#fff',
+    emoji:'🔥',
+    desc:'Estás en tu mejor estado. Tu sistema límbico está en equilibrio, el cortisol bajo y la dopamina activa. Es el momento ideal para atacar la tarea estratégica más importante del Club.',
+    dopamine:[
+      {icon:'🎯', text:'Ataca HOY tu meta #1 del Club. El estado de flow es corto, úsalo.'},
+      {icon:'📊', text:'Toma la decisión que has estado postergando. Tu juicio ahora es óptimo.'},
+      {icon:'🤝', text:'Lidera el check-in del equipo hoy. Tu energía es contagiosa.'},
+    ],
+    priority:'Con este nivel de energía, reasigna la tarea más compleja al primer bloque de la mañana. No la dejes para después. Tu ventana de máximo rendimiento dura 90–120 minutos.'
+  },
+  medio_alto: {
+    name:'🌤️ Modo Estable',
+    sub:'Energía funcional · Foco posible',
+    color:'#2A5FCC', bg:'#EAF0FE', textColor:'#fff',
+    emoji:'🌤️',
+    desc:'Estás operativa, aunque no en tu pico. El modo estable es ideal para tareas medianas y de coordinación. Evita las decisiones grandes para después de almuerzo cuando tu energía puede subir.',
+    dopamine:[
+      {icon:'✅', text:'Completa 3 tareas pequeñas seguidas. Cada check activa un pequeño ciclo de dopamina.'},
+      {icon:'☕', text:'Prepara tu espacio de trabajo antes de abrir el teléfono. El orden reduce el cortisol.'},
+      {icon:'📋', text:'Revisa el sprint y marca lo que ya está listo. Ver progreso reactiva la motivación.'},
+    ],
+    priority:'Prioriza las tareas medianas de coordinación: responder propuestas, revisar el sprint del equipo, aprobar contenido de Instagram. Deja las decisiones estratégicas para cuando sientas el segundo viento.'
+  },
+  medio: {
+    name:'😶 Modo Alerta',
+    sub:'Señal de sobrecarga · Ajuste necesario',
+    color:'#D97706', bg:'#FEF3C7', textColor:'#92400E',
+    emoji:'⚠️',
+    desc:'Tu sistema está dando señales de sobrecarga. Probablemente hay demasiado en la mente y poco espacio para priorizar. No es pereza: es el cerebro en modo de autoprotección cuando las demandas superan los recursos percibidos.',
+    dopamine:[
+      {icon:'✍️', text:'Escribe en papel las 3 cosas más urgentes. Sacarlas de la cabeza baja el cortisol inmediatamente.'},
+      {icon:'🚶', text:'5 minutos de movimiento antes de empezar. El ejercicio breve reinicia la química cerebral.'},
+      {icon:'🎯', text:'Elige UNA sola tarea para la próxima hora. Solo una. El multi-tasking en este estado destruye el avance.'},
+    ],
+    priority:'HOY no es día para decisiones complejas. Elige las 3 tareas más pequeñas y concretas de tu lista y completa solo esas. La sensación de avance, aunque sea mínima, reinicia el ciclo de motivación.'
+  },
+  bajo: {
+    name:'🪫 Modo Recuperación',
+    sub:'Agotamiento real · Prioridad: recargar',
+    color:'#DC2626', bg:'#FEE2E2', textColor:'#991B1B',
+    emoji:'🆘',
+    desc:'Estás en reserva baja. Forzar productividad en este estado produce errores, decisiones pobres y mayor agotamiento. Tu cuerpo y mente están pidiendo un reinicio. Escucharlos no es debilidad, es inteligencia ejecutiva.',
+    dopamine:[
+      {icon:'🛑', text:'Cancela o delega al menos 2 compromisos de hoy. Proteger tu energía ES trabajar en el Club.'},
+      {icon:'💧', text:'Agua, algo de comer, 10 minutos sin pantalla. Los básicos primero. Siempre.'},
+      {icon:'💬', text:'Comunica al equipo que hoy trabajas en modo mínimo. Un mensaje honesto previene malentendidos.'},
+    ],
+    priority:'HOY: solo las tareas absolutamente críticas (vencimiento inminente, compromiso externo irrompible). Todo lo demás pasa a mañana. No es postergación: es gestión responsable de tus recursos.'
+  },
+};
+
+function loadMoodHistory(){
+  // moodHistory ya viene cargado desde la nube en applyCloudData(); no-op.
+}
+function saveMoodHistoryStore(){
+  window.cloudSet && window.cloudSet('mood', moodHistory);
+}
+
+function initMoodUI(){
+  loadMoodHistory();
+  const now = new Date();
+  document.getElementById('moodDateBadge').textContent =
+    now.toLocaleDateString('es-CL',{weekday:'short',day:'numeric',month:'short'});
+  renderPips(0);
+  renderMoodHistory();
+}
+
+function renderPips(current){
+  const wrap = document.getElementById('moodPips');
+  wrap.innerHTML='';
+  for(let i=0;i<TOTAL_STEPS;i++){
+    const d=document.createElement('div');
+    d.className='mood-pip'+(i<current?' done':i===current?' current':'');
+    wrap.appendChild(d);
+  }
+}
+
+function selectOpt(step, val, el){
+  moodAnswers[step]=val;
+  el.closest('.mood-options').querySelectorAll('.mood-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function nextStep(to){
+  if(moodAnswers[to-1]===null){ toast('Elige una opción antes de continuar'); return; }
+  document.getElementById('mstep-'+(to-1)).classList.remove('active');
+  document.getElementById('mstep-'+to).classList.add('active');
+  renderPips(to);
+}
+function prevStep(to){
+  document.getElementById('mstep-'+(to+1)).classList.remove('active');
+  document.getElementById('mstep-'+to).classList.add('active');
+  renderPips(to);
+}
+
+function calcMood(){
+  if(moodAnswers[4]===null){ toast('Elige una opción antes de continuar'); return; }
+  const total = moodAnswers.reduce((s,v)=>s+(v||0),0);
+  const max = 24; // 5+5+5+5+4
+  const pct = Math.round(total/max*100);
+
+  let profile;
+  if(pct>=75) profile=MOOD_PROFILES.alto;
+  else if(pct>=50) profile=MOOD_PROFILES.medio_alto;
+  else if(pct>=25) profile=MOOD_PROFILES.medio;
+  else profile=MOOD_PROFILES.bajo;
+
+  // hide steps
+  document.getElementById('moodSteps').style.display='none';
+  document.getElementById('moodPips').style.display='none';
+
+  const badge=document.getElementById('profileBadge');
+  badge.style.background=profile.bg;
+  badge.style.border='2px solid '+profile.color;
+  document.getElementById('profileEmoji').textContent=profile.emoji;
+  document.getElementById('profileName').innerHTML=`<span style="color:${profile.color}">${profile.name}</span>`;
+  document.getElementById('profileSub').style.color=profile.color;
+  document.getElementById('profileSub').textContent=profile.sub+' · Score: '+pct+'%';
+  document.getElementById('profileDesc').textContent=profile.desc;
+
+  // score bar color
+  const scoreBar=`<div style="height:6px;background:#ddd;border-radius:99px;margin-top:10px;overflow:hidden;">
+    <div style="width:${pct}%;background:${profile.color};height:100%;border-radius:99px;transition:width .6s;"></div></div>`;
+  badge.insertAdjacentHTML('beforeend',scoreBar);
+
+  // dopamine list
+  const dl=document.getElementById('dopamineList'); dl.innerHTML='';
+  profile.dopamine.forEach(d=>{
+    dl.innerHTML+=`<li class="recom-item"><span class="recom-icon">${d.icon}</span><div>${d.text}</div></li>`;
+  });
+
+  document.getElementById('priorityAdjust').innerHTML=profile.priority;
+
+  document.getElementById('moodResult').classList.add('show');
+
+  // store temp for save
+  window._lastMoodProfile={name:profile.name,emoji:profile.emoji,pct,color:profile.color,score:total,max};
+}
+
+function saveMoodHistory(){
+  if(!window._lastMoodProfile){ toast('Primero completa la evaluación'); return; }
+  const entry={
+    id:uid(),
+    date:new Date().toLocaleDateString('es-CL',{day:'numeric',month:'short',year:'numeric'}),
+    ts:Date.now(),
+    ...window._lastMoodProfile,
+  };
+  moodHistory.unshift(entry);
+  if(moodHistory.length>12) moodHistory=moodHistory.slice(0,12);
+  saveMoodHistoryStore();
+  renderMoodHistory();
+  toast('📊 Evaluación guardada en historial');
+}
+
+function resetMood(){
+  moodAnswers=[null,null,null,null,null];
+  document.getElementById('moodResult').classList.remove('show');
+  document.getElementById('profileBadge').querySelectorAll('div:last-child').forEach(el=>{
+    if(el.querySelector('div[style*="height:6px"]')) el.remove();
+  });
+  // remove injected score bar
+  const badge=document.getElementById('profileBadge');
+  const bars=badge.querySelectorAll('div');
+  bars.forEach(b=>{ if(b.style.height==='6px'||b.querySelector('div[style*="height:6px"]')) b.remove(); });
+
+  document.getElementById('moodSteps').style.display='';
+  document.getElementById('moodPips').style.display='';
+  document.querySelectorAll('.mood-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('mstep-0').classList.add('active');
+  document.querySelectorAll('.mood-opt').forEach(o=>o.classList.remove('sel'));
+  renderPips(0);
+  window._lastMoodProfile=null;
+}
+
+function renderMoodHistory(){
+  const hist = document.getElementById('moodHistoryCard');
+  const list = document.getElementById('moodHistoryList');
+  if(!moodHistory.length){ hist.style.display='none'; return; }
+  hist.style.display='block';
+  list.innerHTML='';
+  moodHistory.slice(0,6).forEach(h=>{
+    list.innerHTML+=`
+      <div class="mood-history-row">
+        <span class="mood-history-emoji">${h.emoji}</span>
+        <div style="flex:1">
+          <div class="mood-history-profile">${h.name}</div>
+          <div style="height:4px;background:var(--border);border-radius:99px;margin-top:3px;overflow:hidden;">
+            <div style="width:${h.pct}%;background:${h.color};height:100%;border-radius:99px;"></div>
+          </div>
+        </div>
+        <span class="mood-history-date">${h.date}</span>
+      </div>`;
+  });
+}
+
+function clearHistory(){
+  moodHistory=[];
+  saveMoodHistoryStore();
+  renderMoodHistory();
+  toast('🗑️ Historial limpiado');
+}
+
+// ═══════════════ TOAST ═══════════════
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2300);
+}
+
+// ═══════════════ INIT ═══════════════
+function init(){
+  const now=new Date();
+  document.getElementById('topDate').textContent=
+    now.toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('metaDate').value=now.toISOString().split('T')[0];
+  load();
+  renderTasks();
+}
+// Llamado por la capa de autenticación tras cargar los datos del usuario.
+function bootApp(cloudData){
+  applyCloudData(cloudData);
+  init();
+}
+// NOTA: init() ya no se llama aquí; lo dispara el login (ver módulo Firebase abajo).
+</script>
+
+<!-- ═══════════════ FIREBASE · AUTH + FIRESTORE ═══════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, signInWithEmailAndPassword,
+  createUserWithEmailAndPassword, signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDxVCUM808BRJ-5_SAG4bkdmu4e8xbVQn8",
+  authDomain: "gestion-de-personas-ce003.firebaseapp.com",
+  projectId: "gestion-de-personas-ce003",
+  storageBucket: "gestion-de-personas-ce003.firebasestorage.app",
+  messagingSenderId: "943250965489",
+  appId: "1:943250965489:web:6f17d07e76789b99107a50",
+  measurementId: "G-2DBLTTNWP5"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+let currentUser = null;
+let booted = false;
+
+// ── Guardado en la nube (con anti-rebote para no escribir en cada tecla) ──
+let saveTimer = null;
+let pending = {};
+window.cloudSet = function(field, value){
+  if(!currentUser) return;
+  pending[field] = value;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flush, 400);
+};
+async function flush(){
+  if(!currentUser) return;
+  const data = { ...pending };
+  pending = {};
+  try{
+    await setDoc(doc(db, "users", currentUser.uid), data, { merge: true });
+  }catch(e){
+    console.error("Error guardando en Firestore:", e);
+    if(window.toast) toast("⚠️ No se pudo guardar en la nube");
+  }
+}
+
+// ── Referencias del overlay de login ──
+const overlay   = document.getElementById("authOverlay");
+const emailEl   = document.getElementById("authEmail");
+const passEl    = document.getElementById("authPass");
+const errEl     = document.getElementById("authError");
+const primaryBtn= document.getElementById("authPrimaryBtn");
+const toggleLink= document.getElementById("authToggleLink");
+const toggleText= document.getElementById("authToggleText");
+const subtitle  = document.getElementById("authSubtitle");
+
+let mode = "login"; // 'login' | 'register'
+
+toggleLink.addEventListener("click", (e)=>{
+  e.preventDefault();
+  mode = (mode === "login") ? "register" : "login";
+  errEl.textContent = "";
+  if(mode === "register"){
+    subtitle.textContent   = "Crea tu cuenta de equipo";
+    primaryBtn.textContent = "Crear cuenta";
+    toggleText.textContent = "¿Ya tienes cuenta?";
+    toggleLink.textContent = "Iniciar sesión";
+    passEl.setAttribute("autocomplete","new-password");
+  }else{
+    subtitle.textContent   = "Inicia sesión para continuar";
+    primaryBtn.textContent = "Entrar";
+    toggleText.textContent = "¿No tienes cuenta?";
+    toggleLink.textContent = "Crear cuenta";
+    passEl.setAttribute("autocomplete","current-password");
+  }
+});
+
+function friendlyError(code){
+  const map = {
+    "auth/invalid-email": "El correo no es válido.",
+    "auth/missing-password": "Escribe tu contraseña.",
+    "auth/invalid-credential": "Correo o contraseña incorrectos.",
+    "auth/wrong-password": "Correo o contraseña incorrectos.",
+    "auth/user-not-found": "No existe una cuenta con ese correo.",
+    "auth/email-already-in-use": "Ese correo ya está registrado.",
+    "auth/weak-password": "La contraseña debe tener al menos 6 caracteres.",
+    "auth/too-many-requests": "Demasiados intentos. Espera un momento.",
+    "auth/network-request-failed": "Sin conexión. Revisa tu internet."
+  };
+  return map[code] || "Ocurrió un error. Inténtalo de nuevo.";
+}
+
+async function submitAuth(){
+  const email = emailEl.value.trim();
+  const pass  = passEl.value;
+  if(!email || !pass){ errEl.textContent = "Completa correo y contraseña."; return; }
+  primaryBtn.disabled = true;
+  primaryBtn.style.opacity = ".6";
+  errEl.textContent = "";
+  try{
+    if(mode === "register"){
+      await createUserWithEmailAndPassword(auth, email, pass);
+    }else{
+      await signInWithEmailAndPassword(auth, email, pass);
+    }
+    passEl.value = "";
+    // onAuthStateChanged se encarga de cargar datos y ocultar el overlay.
+  }catch(e){
+    errEl.textContent = friendlyError(e.code);
+  }finally{
+    primaryBtn.disabled = false;
+    primaryBtn.style.opacity = "1";
+  }
+}
+
+primaryBtn.addEventListener("click", submitAuth);
+passEl.addEventListener("keydown", (e)=>{ if(e.key === "Enter") submitAuth(); });
+emailEl.addEventListener("keydown", (e)=>{ if(e.key === "Enter") passEl.focus(); });
+
+document.getElementById("logoutBtn").addEventListener("click", async ()=>{
+  // Vacía cualquier escritura pendiente antes de salir.
+  clearTimeout(saveTimer);
+  await flush();
+  await signOut(auth);
+});
+
+// ── Estado de sesión: punto de entrada real de la app ──
+onAuthStateChanged(auth, async (user)=>{
+  if(user){
+    currentUser = user;
+    let data = {};
+    try{
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if(snap.exists()) data = snap.data();
+    }catch(e){
+      console.error("Error cargando datos:", e);
+    }
+    overlay.style.display = "none";
+    // Arranca la app con los datos del usuario (sólo la primera vez).
+    if(!booted){
+      booted = true;
+      window.bootApp(data);
+    }else{
+      window.applyCloudData(data);
+      if(window.renderTasks) renderTasks();
+    }
+  }else{
+    currentUser = null;
+    overlay.style.display = "flex";
+  }
+});
+</script>
+</body>
+</html>
