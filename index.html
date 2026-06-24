@@ -326,6 +326,34 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
 .dp-progress-bar{height:6px;background:var(--border);border-radius:99px;overflow:hidden;}
 .dp-progress-fill{height:100%;background:linear-gradient(90deg,var(--sage),var(--sage-light));border-radius:99px;transition:width .5s cubic-bezier(.34,1.56,.64,1);}
 
+/* ── RBAC · ROLE SYSTEM ── */
+.role-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap;max-width:130px;overflow:hidden;text-overflow:ellipsis;}
+.pending-overlay{position:fixed;inset:0;z-index:180;background:linear-gradient(160deg,#1A1A1A 0%,#243b32 100%);display:none;align-items:center;justify-content:center;padding:24px;}
+.pending-card{width:100%;max-width:340px;background:#fff;border-radius:20px;padding:28px 24px;text-align:center;font-family:'Inter',sans-serif;}
+/* ── CONTROL TOWER ── */
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.ct-stat{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;}
+.ct-member{border:1.5px solid var(--border);border-radius:11px;padding:12px;background:var(--surface);}
+.ct-member-emoji{font-size:28px;margin-bottom:5px;}
+.ct-member-name{font-size:12px;font-weight:700;margin-bottom:2px;}
+.ct-member-role{font-size:10px;color:var(--mid);margin-bottom:6px;}
+.ct-role-pill{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;display:inline-block;margin-bottom:5px;}
+.ct-approval-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.ct-approval-row:last-child{border-bottom:none;}
+.ct-audit-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--mid);}
+.ct-audit-row:last-child{border-bottom:none;}
+.ct-pending-box{background:#FEF3C7;border:1.5px solid #FDE68A;border-radius:10px;padding:10px 12px;margin-bottom:12px;}
+.ct-pending-title{font-size:11px;font-weight:800;color:#92400E;margin-bottom:8px;}
+.ct-pending-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #FDE68A55;}
+.ct-pending-row:last-child{border-bottom:none;}
+/* ── USER MGMT DRAWER ── */
+.umgmt-overlay{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.55);display:none;align-items:flex-end;}
+.umgmt-drawer{background:#fff;border-radius:20px 20px 0 0;padding:20px;max-height:85vh;overflow-y:auto;width:100%;}
+.umgmt-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+.umgmt-row:last-child{border-bottom:none;}
+.umgmt-select{font-size:11px;border:1px solid var(--border);border-radius:7px;padding:4px 6px;background:var(--bg);font-family:'Inter',sans-serif;}
+/* ── MODULE ACCESS PILLS ── */
+.module-pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:99px;display:inline-block;margin:2px;}
 @media(min-width:600px){
   .capture-wrap,main,#statsRibbon,.sort-bar{max-width:640px;margin-left:auto;margin-right:auto;}
   .top-bar{padding:14px 24px 0;}
@@ -365,6 +393,30 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
       <span id="authToggleText">¿No tienes cuenta?</span>
       <a id="authToggleLink" href="#" style="color:#1F7A52;font-weight:700;text-decoration:none;margin-left:4px;">Crear cuenta</a>
     </div>
+  </div>
+</div>
+
+<!-- ── PENDING ROLE SCREEN ── -->
+<div id="pendingOverlay" class="pending-overlay">
+  <div class="pending-card">
+    <div style="font-size:52px;margin-bottom:12px;">⏳</div>
+    <div style="font-size:16px;font-weight:800;color:#1A1A1A;margin-bottom:6px;">Cuenta en revisión</div>
+    <div style="font-size:13px;color:#6B7280;line-height:1.6;margin-bottom:10px;">Tu cuenta fue creada correctamente. El Director del equipo debe asignarte un rol para que puedas acceder al sistema.</div>
+    <div style="font-size:11px;color:#9CA3AF;padding:6px 10px;background:#F3F4F6;border-radius:7px;margin-bottom:18px;" id="pendingEmail"></div>
+    <button onclick="checkRoleUpdate()" class="btn btn-sage" style="width:100%;padding:12px;font-size:13px;margin-bottom:8px;">🔄 Verificar activación</button>
+    <button onclick="document.getElementById('logoutBtn').click()" class="btn btn-ghost" style="width:100%;padding:12px;font-size:13px;">Cerrar sesión</button>
+  </div>
+</div>
+
+<!-- ── USER MANAGEMENT DRAWER (Director) ── -->
+<div id="userMgmtDrawer" class="umgmt-overlay" onclick="if(event.target===this)this.style.display='none'">
+  <div class="umgmt-drawer">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-size:15px;font-weight:800;">🔑 Gestión de Usuarios</div>
+      <button onclick="document.getElementById('userMgmtDrawer').style.display='none'" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid);">×</button>
+    </div>
+    <div style="font-size:11px;color:var(--mid);margin-bottom:12px;">Asigna roles a los miembros de la organización. Los cambios se aplican inmediatamente.</div>
+    <div id="userMgmtList"></div>
   </div>
 </div>
 
@@ -441,8 +493,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
 <div class="top-bar">
   <div class="top-row">
     <div class="top-name"><span class="sprint-dot"></span>Gestión de Equipos Club Patio</div>
-    <div style="display:flex;align-items:center;gap:10px;">
+    <div style="display:flex;align-items:center;gap:8px;">
       <div class="top-date" id="topDate"></div>
+      <div id="roleBadge" class="role-badge" style="background:#2a2a2a;color:#888;">⏳ —</div>
       <button id="logoutBtn" type="button" title="Cerrar sesión"
         style="background:none;border:1px solid #444;color:#bbb;font-size:10px;font-weight:600;padding:4px 9px;border-radius:7px;cursor:pointer;font-family:inherit;">Salir</button>
     </div>
@@ -848,13 +901,67 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
   </div>
 </div>
 
-<!-- ── BOTTOM NAV ── -->
-<nav class="bottom-nav">
-  <button class="nav-item active" id="nav-tareas"  onclick="showPage('tareas')"><span class="nav-icon">📋</span><span class="nav-label">Tareas</span></button>
-  <button class="nav-item"        id="nav-sprint"  onclick="showPage('sprint')"><span class="nav-icon">⚡</span><span class="nav-label">Sprint</span></button>
-  <button class="nav-item"        id="nav-equipo"  onclick="showPage('equipo')"><span class="nav-icon">👥</span><span class="nav-label">Equipo</span></button>
-  <button class="nav-item"        id="nav-coach"   onclick="showPage('coach')"><span class="nav-icon">🧠</span><span class="nav-label">Coach</span></button>
-</nav>
+<!-- ══════════════════════════════════════
+     PAGE 5 · CONTROL TOWER (Director)
+════════════════════════════════════════ -->
+<div class="page" id="pg-control">
+  <div style="padding:14px 14px 0;">
+
+    <div class="card" style="background:linear-gradient(135deg,#1A1A1A,#1a3025);border:none;margin-bottom:12px;">
+      <div style="color:#fff;">
+        <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#888;margin-bottom:4px;">Director · Vista privada</div>
+        <div style="font-size:16px;font-weight:800;">🎛️ Control Tower</div>
+        <div style="font-size:11px;color:#aaa;margin-top:3px;">Auditoría completa de la organización</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="ct-grid" id="ctStatsRow"></div>
+
+    <!-- Pending users alert -->
+    <div id="ctPendingAlert"></div>
+
+    <!-- Org members -->
+    <div class="card">
+      <div class="card-title">
+        <span>👥 Miembros activos</span>
+        <button class="btn btn-sage btn-sm" onclick="openUserMgmt()">+ Gestionar</button>
+      </div>
+      <div class="ct-grid" id="ctMembersGrid"></div>
+    </div>
+
+    <!-- Pending approvals -->
+    <div class="card" id="ctApprovalsCard">
+      <div class="card-title">
+        <span>✅ Aprobaciones pendientes</span>
+        <span class="card-sub" id="ctApprovalCount">0</span>
+      </div>
+      <div id="ctApprovalsList"><div class="workplan-empty">Sin aprobaciones pendientes.</div></div>
+    </div>
+
+    <!-- Stealth audit log -->
+    <div class="card">
+      <div class="card-title">
+        <span>📊 Actividad reciente</span>
+        <span class="card-sub" style="color:var(--p1);">Solo visible aquí</span>
+      </div>
+      <div id="ctAuditLog"><div class="workplan-empty">Sin actividad registrada aún.</div></div>
+    </div>
+
+    <!-- Kids mood overview (stealth) -->
+    <div class="card">
+      <div class="card-title">
+        <span>🌡️ Estado emocional · Hijos</span>
+        <span class="card-sub" style="color:var(--p1);">Stealth</span>
+      </div>
+      <div id="ctMoodOverview"><div class="workplan-empty">Sin check-ins registrados.</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── BOTTOM NAV (dinámico por rol) ── -->
+<nav class="bottom-nav" id="bottomNav"></nav>
 
 <div class="toast" id="toast"></div>
 
@@ -883,6 +990,37 @@ const FREQ_MAP={
   semanal:{label:'📆 Semanal',icon:'📆'},
   casual:{label:'✦ Casual',  icon:'✦'},
 };
+
+// ═══════════════ RBAC · ROLES & PERMISOS ═══════════════
+const ORG_ID = 'curauma_001';
+const ROLES = {
+  director:             {label:'Director / Papá',     emoji:'👨', color:'#059669', bg:'#DCFCE7', modules:['casa','club','bazar','tienda'], nav:['tareas','sprint','equipo','coach','control'], canReadAll:true,  canApprove:true},
+  mama:                 {label:'Mamá',                emoji:'👩', color:'#DB2777', bg:'#FCE7F3', modules:['casa','bazar','tienda'],        nav:['tareas','equipo','coach'],                  canReadAll:false},
+  hijo1:                {label:'Hijo 1',              emoji:'👦', color:'#2563EB', bg:'#DBEAFE', modules:['casa'],                        nav:['tareas','coach'],                           canReadAll:false},
+  hijo2:                {label:'Hijo 2',              emoji:'👧', color:'#7C3AED', bg:'#EDE9FE', modules:['casa'],                        nav:['tareas','coach'],                           canReadAll:false},
+  publicista:           {label:'Publicista',          emoji:'📣', color:'#D97706', bg:'#FEF3C7', modules:['club'],                        nav:['tareas'],                                   requiresApproval:true},
+  disenador:            {label:'Diseñador/a',         emoji:'🎨', color:'#7C3AED', bg:'#EDE9FE', modules:['club'],                        nav:['tareas'],                                   requiresApproval:true},
+  coordinadora_bazares: {label:'Coord. Bazares',      emoji:'🎪', color:'#0891B2', bg:'#CFFAFE', modules:['club','bazar'],                nav:['tareas','equipo'],                          canReadAll:false},
+  coordinadora_tienda:  {label:'Coord. Tienda',       emoji:'🏪', color:'#16A34A', bg:'#DCFCE7', modules:['tienda'],                      nav:['tareas'],                                   canReadAll:false},
+  staff_montaje:        {label:'Staff Montaje',       emoji:'🔧', color:'#64748B', bg:'#F1F5F9', modules:['bazar'],                       nav:['tareas'],                                   canReadAll:false},
+  vendedor:             {label:'Vendedor/a',          emoji:'💼', color:'#0F766E', bg:'#CCFBF1', modules:['tienda'],                      nav:['tareas'],                                   canReadAll:false},
+  programador:          {label:'Programador Web',     emoji:'💻', color:'#1D4ED8', bg:'#DBEAFE', modules:['tienda','club'],               nav:['tareas'],                                   canReadAll:false},
+  pending:              {label:'Cuenta Pendiente',    emoji:'⏳', color:'#9CA3AF', bg:'#F3F4F6', modules:[],                              nav:[],                                           canReadAll:false},
+};
+window.ROLES = ROLES;
+
+const NAV_META = {
+  tareas:  {icon:'📋', label:'Tareas'},
+  sprint:  {icon:'⚡', label:'Sprint'},
+  equipo:  {icon:'👥', label:'Equipo'},
+  coach:   {icon:'🧠', label:'Coach'},
+  control: {icon:'🎛️', label:'Control'},
+};
+
+let currentRole = 'pending';
+let currentProfile = {};
+window.orgMembers = [];
+window._localAuditLog = [];
 
 // ═══════════════ STORAGE (Firestore en la nube) ═══════════════
 // Los datos del usuario se cargan desde Firestore en applyCloudData() antes
@@ -939,15 +1077,225 @@ function seedCheckins(){
 
 // ═══════════════ NAV ═══════════════
 function showPage(p){
+  const rc = ROLES[currentRole] || ROLES.pending;
+  if(currentRole !== 'director' && !rc.nav.includes(p)){
+    toast('⛔ Sin acceso a esta sección'); return;
+  }
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-  document.getElementById('pg-'+p).classList.add('active');
-  document.getElementById('nav-'+p).classList.add('active');
+  const pg = document.getElementById('pg-'+p);
+  if(pg) pg.classList.add('active');
+  const nv = document.getElementById('nav-'+p);
+  if(nv) nv.classList.add('active');
   if(p==='sprint'){renderSprint();renderMatrix();renderGoals();}
   if(p==='equipo'){renderFamily();renderTeam();renderCheckins();}
   if(p==='coach'){renderScenarios();initMoodUI();if(!planOrder.length)refreshDayPlan();else renderDayPlan();}
+  if(p==='control'){renderControlTower();}
   window.scrollTo(0,0);
 }
+
+// ═══════════════ ROLE ROUTER ═══════════════
+function mountRoleUI(role, profile){
+  currentRole = role || 'pending';
+  window.currentRole = currentRole;
+  currentProfile = profile || {};
+  const rc = ROLES[currentRole] || ROLES.pending;
+
+  // Role badge in header
+  const badge = document.getElementById('roleBadge');
+  if(badge){ badge.textContent = rc.emoji+' '+rc.label; badge.style.background=rc.bg; badge.style.color=rc.color; }
+
+  if(currentRole === 'pending'){
+    document.getElementById('pendingOverlay').style.display = 'flex';
+    const pe = document.getElementById('pendingEmail');
+    if(pe) pe.textContent = currentProfile.email || '';
+    return;
+  }
+  document.getElementById('pendingOverlay').style.display = 'none';
+
+  renderDynamicNav(currentRole);
+
+  // Show first page in role's nav
+  const first = rc.nav[0];
+  if(first) showPage(first);
+
+  // Director loads org
+  if(currentRole === 'director') setTimeout(()=>window.loadOrgData&&window.loadOrgData(), 600);
+
+  // Stealth audit entry
+  writeAuditEntry('login', {emoji:'🔐', role: currentRole});
+}
+window.mountRoleUI = mountRoleUI;
+
+function renderDynamicNav(role){
+  const nav = document.getElementById('bottomNav');
+  if(!nav) return;
+  const rc = ROLES[role] || ROLES.pending;
+  nav.innerHTML = '';
+  rc.nav.forEach((key, i) => {
+    const m = NAV_META[key]; if(!m) return;
+    const btn = document.createElement('button');
+    btn.className = 'nav-item'+(i===0?' active':'');
+    btn.id = 'nav-'+key;
+    btn.onclick = ()=>showPage(key);
+    btn.innerHTML = `<span class="nav-icon">${m.icon}</span><span class="nav-label">${m.label}</span>`;
+    nav.appendChild(btn);
+  });
+}
+
+// ═══════════════ CONTROL TOWER ═══════════════
+function renderControlTower(){
+  if(currentRole !== 'director') return;
+  renderCtStats();
+  renderCtMembers();
+  renderCtPendingAlert();
+  renderCtAudit();
+  renderCtMoodOverview();
+}
+
+function renderCtStats(){
+  const el = document.getElementById('ctStatsRow'); if(!el) return;
+  const members = window.orgMembers || [];
+  const pending = members.filter(m=>m.role==='pending').length;
+  const active  = members.filter(m=>m.role!=='pending').length;
+  const allTasks = members.flatMap(m=>Array.isArray(m._tasks)?m._tasks:[]);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const overdue = allTasks.filter(t=>!t.done&&t.deadline&&new Date(t.deadline+'T00:00:00')<today).length;
+  const done    = allTasks.filter(t=>t.done).length;
+  el.innerHTML = `
+    <div class="ct-stat"><div class="stat-num" style="font-size:18px;color:var(--sage)">${active}</div><div class="stat-lbl">Activos</div></div>
+    <div class="ct-stat"><div class="stat-num" style="font-size:18px;color:var(--p2)">${pending}</div><div class="stat-lbl">Pendientes</div></div>
+    <div class="ct-stat"><div class="stat-num" style="font-size:18px;color:var(--p1)">${overdue}</div><div class="stat-lbl">Vencidas</div></div>
+    <div class="ct-stat"><div class="stat-num" style="font-size:18px;color:var(--sage)">${done}</div><div class="stat-lbl">Completadas</div></div>`;
+}
+
+function renderCtPendingAlert(){
+  const el = document.getElementById('ctPendingAlert'); if(!el) return;
+  const pendUsers = (window.orgMembers||[]).filter(m=>m.role==='pending');
+  if(!pendUsers.length){ el.innerHTML=''; return; }
+  el.innerHTML = `<div class="ct-pending-box">
+    <div class="ct-pending-title">⏳ ${pendUsers.length} cuenta${pendUsers.length>1?'s':''} esperando activación</div>
+    ${pendUsers.map(m=>`
+      <div class="ct-pending-row">
+        <span style="flex:1;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.displayName||m.email}</span>
+        <select id="rolesel-${m.uid}" class="umgmt-select">
+          ${Object.entries(ROLES).filter(([k])=>k!=='pending').map(([k,v])=>`<option value="${k}">${v.emoji} ${v.label}</option>`).join('')}
+        </select>
+        <button onclick="assignRole('${m.uid}')" class="btn btn-sage btn-sm">Asignar</button>
+      </div>`).join('')}
+  </div>`;
+}
+
+function renderCtMembers(){
+  const el = document.getElementById('ctMembersGrid'); if(!el) return;
+  const active = (window.orgMembers||[]).filter(m=>m.role!=='pending');
+  if(!active.length){ el.innerHTML='<div class="workplan-empty" style="grid-column:1/-1;">Sin miembros activos. Activa cuentas desde el panel de alertas.</div>'; return; }
+  el.innerHTML = '';
+  active.forEach(m=>{
+    const rc = ROLES[m.role]||ROLES.pending;
+    const mt = Array.isArray(m._tasks)?m._tasks:[];
+    const pend = mt.filter(t=>!t.done).length, done2 = mt.filter(t=>t.done).length;
+    const pct = (pend+done2)>0?Math.round(done2/(pend+done2)*100):0;
+    const card = document.createElement('div');
+    card.className='ct-member';
+    card.innerHTML=`
+      <div class="ct-member-emoji">${rc.emoji}</div>
+      <div class="ct-member-name">${m.displayName||m.email.split('@')[0]}</div>
+      <div class="ct-member-role">${rc.label}</div>
+      <span class="ct-role-pill" style="background:${rc.bg};color:${rc.color};">${m.role}</span>
+      <div class="bar-wrap" style="margin-top:5px;">
+        <div class="bar-label"><span>${pend} pendiente${pend!==1?'s':''}</span><span>${pct}%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${rc.color};"></div></div>
+      </div>`;
+    el.appendChild(card);
+  });
+}
+
+function renderCtAudit(){
+  const el = document.getElementById('ctAuditLog'); if(!el) return;
+  const log = (window._localAuditLog||[]).slice(0,8);
+  if(!log.length){ el.innerHTML='<div class="workplan-empty">Sin actividad registrada aún.</div>'; return; }
+  el.innerHTML = log.map(e=>`
+    <div class="ct-audit-row">
+      <span>${e.emoji||'📌'}</span>
+      <span style="flex:1;"><strong style="color:var(--charcoal);">${e.actorLabel}</strong> — ${e.action}</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;">${new Date(e.ts).toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'})}</span>
+    </div>`).join('');
+}
+
+function renderCtMoodOverview(){
+  const el = document.getElementById('ctMoodOverview'); if(!el) return;
+  const kidsProfiles = (window.orgMembers||[]).filter(m=>m.role==='hijo1'||m.role==='hijo2');
+  if(!kidsProfiles.length){ el.innerHTML='<div class="workplan-empty">Sin hijos registrados en el sistema.</div>'; return; }
+  el.innerHTML = kidsProfiles.map(m=>{
+    const rc = ROLES[m.role]||{};
+    const lastCheckin = m._lastCheckin;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">
+      <span style="font-size:22px;">${rc.emoji||'👤'}</span>
+      <div style="flex:1;">
+        <div style="font-size:12px;font-weight:700;">${m.displayName||m.email.split('@')[0]}</div>
+        <div style="font-size:11px;color:var(--mid);">${lastCheckin?'Último check-in: '+lastCheckin.date+' · '+lastCheckin.profileKey:'Sin check-ins registrados'}</div>
+      </div>
+      ${lastCheckin?`<span style="font-size:20px;">${lastCheckin.emoji||'—'}</span>`:'<span style="color:var(--mid);font-size:11px;">—</span>'}
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════ USER MANAGEMENT ═══════════════
+function openUserMgmt(){
+  if(currentRole!=='director'){toast('⛔ Solo el Director puede gestionar usuarios');return;}
+  renderUserMgmtList();
+  document.getElementById('userMgmtDrawer').style.display='flex';
+}
+window.openUserMgmt = openUserMgmt;
+
+function renderUserMgmtList(){
+  const el=document.getElementById('userMgmtList'); if(!el) return;
+  const members = window.orgMembers||[];
+  if(!members.length){el.innerHTML='<div class="workplan-empty">No hay usuarios en la organización aún.</div>';return;}
+  el.innerHTML = members.map(m=>{
+    const rc=ROLES[m.role]||ROLES.pending;
+    return `<div class="umgmt-row">
+      <span style="font-size:22px;">${rc.emoji}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:700;">${m.displayName||'—'}</div>
+        <div style="font-size:10px;color:var(--mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.email}</div>
+      </div>
+      <select class="umgmt-select" onchange="window.assignRoleDirect&&window.assignRoleDirect('${m.uid}',this.value)">
+        ${Object.entries(ROLES).filter(([k])=>k!=='pending').map(([k,v])=>`<option value="${k}" ${m.role===k?'selected':''}>${v.emoji} ${v.label}</option>`).join('')}
+      </select>
+    </div>`;
+  }).join('');
+}
+
+function assignRole(uid){
+  const sel=document.getElementById('rolesel-'+uid); if(!sel)return;
+  window.assignRoleDirect&&window.assignRoleDirect(uid,sel.value);
+}
+window.assignRole = assignRole;
+
+function checkRoleUpdate(){
+  window.loadOrgData&&window.loadOrgData();
+  toast('🔄 Verificando activación...');
+}
+window.checkRoleUpdate = checkRoleUpdate;
+
+// ═══════════════ STEALTH AUDIT (sin UI para actores) ═══════════════
+function writeAuditEntry(action, meta){
+  const rc = ROLES[currentRole]||{};
+  const entry = {
+    ts: Date.now(),
+    actorUid: currentProfile.uid||'',
+    actorLabel: (rc.emoji||'')+(currentProfile.displayName||currentProfile.email||'Usuario'),
+    actorRole: currentRole,
+    action, emoji: meta.emoji||'📌',
+    orgId: ORG_ID, metadata: meta
+  };
+  window._localAuditLog.unshift(entry);
+  if(window._localAuditLog.length>50) window._localAuditLog=window._localAuditLog.slice(0,50);
+  window.cloudWriteAudit&&window.cloudWriteAudit(entry);
+}
+window.writeAuditEntry = writeAuditEntry;
 
 // ═══════════════ OWNER OPTIONS ═══════════════
 const OWNER_OPTS={
@@ -2128,11 +2476,15 @@ function init(){
   renderTasks();
 }
 // Llamado por la capa de autenticación tras cargar los datos del usuario.
-function bootApp(cloudData){
+function bootApp(cloudData, profile){
   applyCloudData(cloudData);
   init();
   checkDeadlines();
-  setTimeout(()=>window.triggerDailyCheckin&&window.triggerDailyCheckin(),300);
+  const role = (profile&&profile.role)||'pending';
+  mountRoleUI(role, profile||{});
+  if(role !== 'pending'){
+    setTimeout(()=>window.triggerDailyCheckin&&window.triggerDailyCheckin(), 300);
+  }
 }
 // NOTA: init() ya no se llama aquí; lo dispara el login (ver módulo Firebase abajo).
 </script>
@@ -2145,7 +2497,8 @@ import {
   createUserWithEmailAndPassword, signOut, sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-  getFirestore, doc, getDoc, setDoc
+  getFirestore, doc, getDoc, setDoc,
+  collection, getDocs, addDoc, query, where, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -2161,6 +2514,7 @@ const firebaseConfig = {
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
+const ORG_ID = 'curauma_001'; // mirror del main script
 
 let currentUser = null;
 let booted = false;
@@ -2312,29 +2666,102 @@ document.getElementById("logoutBtn").addEventListener("click", async ()=>{
   await signOut(auth);
 });
 
+// ── Crear perfil de usuario en /users/{uid} ──
+async function createUserProfile(uid, email){
+  const profile = {
+    uid, orgId: ORG_ID, email,
+    displayName: email.split('@')[0],
+    role: 'pending', modules: [],
+    profile: { avatarEmoji:'👤', color:'#9CA3AF' },
+    onboardingComplete: false,
+    createdAt: new Date().toISOString(),
+    lastSeen: new Date().toISOString()
+  };
+  await setDoc(doc(db,'users',uid), profile, {merge:true});
+  return profile;
+}
+
+// ── Cargar todos los usuarios de la org (Director) ──
+window.loadOrgData = async function(){
+  if(!currentUser) return;
+  try{
+    const q = query(collection(db,'users'), where('orgId','==',ORG_ID));
+    const snap = await getDocs(q);
+    const members = [];
+    for(const d of snap.docs){
+      const m = {...d.data()};
+      // Stealth: cargar tareas de cada miembro para el director
+      try{
+        const ud = await getDoc(doc(db,'users',m.uid));
+        if(ud.exists()){ m._tasks = ud.data().tasks||[]; m._lastCheckin = (ud.data().mood||[])[0]||null; }
+      }catch(e2){}
+      members.push(m);
+    }
+    window.orgMembers = members;
+    if(window.renderControlTower) window.renderControlTower();
+    // Si el usuario actual era 'pending' y fue activado, remontar UI
+    const me = members.find(m=>m.uid===currentUser.uid);
+    if(me && me.role !== 'pending' && window.currentRole === 'pending'){
+      window.mountRoleUI(me.role, me);
+      if(window.toast) window.toast('✅ ¡Cuenta activada! Bienvenido/a.');
+    }
+  }catch(e){ console.error('loadOrgData:', e); }
+};
+
+// ── Asignar rol a un usuario (Director) ──
+window.assignRoleDirect = async function(uid, role){
+  if(!currentUser) return;
+  try{
+    const rc = (window.ROLES||{})[role]||{};
+    await setDoc(doc(db,'users',uid),{
+      role, modules: rc.modules||[],
+      updatedBy: currentUser.uid,
+      updatedAt: new Date().toISOString()
+    },{merge:true});
+    await window.loadOrgData();
+    document.getElementById('userMgmtDrawer').style.display='none';
+    if(window.toast) window.toast('✅ Rol asignado correctamente');
+    window.writeAuditEntry&&window.writeAuditEntry('role_assigned',{emoji:'🔑',targetUid:uid,role});
+  }catch(e){ if(window.toast)window.toast('⚠️ Error al asignar rol'); console.error(e); }
+};
+
+// ── Stealth: escribir audit log en Firestore (solo Director puede leer) ──
+window.cloudWriteAudit = async function(entry){
+  try{
+    await addDoc(collection(db,'audit_log'),{...entry, serverTs: serverTimestamp()});
+  }catch(e){ /* stealth — sin UI */ }
+};
+
 // ── Estado de sesión: punto de entrada real de la app ──
 onAuthStateChanged(auth, async (user)=>{
   if(user){
     currentUser = user;
-    let data = {};
+    let data = {}, profile = null;
     try{
-      const snap = await getDoc(doc(db, "users", user.uid));
-      if(snap.exists()) data = snap.data();
+      const snap = await getDoc(doc(db,'users',user.uid));
+      if(snap.exists()){
+        data = snap.data();
+        profile = snap.data();
+      } else {
+        profile = await createUserProfile(user.uid, user.email);
+      }
+      // Actualizar lastSeen en background
+      setDoc(doc(db,'users',user.uid),{lastSeen:new Date().toISOString()},{merge:true}).catch(()=>{});
     }catch(e){
-      console.error("Error cargando datos:", e);
+      console.error('Error cargando sesión:', e);
     }
-    overlay.style.display = "none";
-    // Arranca la app con los datos del usuario (sólo la primera vez).
+    overlay.style.display = 'none';
     if(!booted){
       booted = true;
-      window.bootApp(data);
+      window.bootApp(data, profile);
     }else{
       window.applyCloudData(data);
-      if(window.renderTasks) renderTasks();
+      if(window.renderTasks) window.renderTasks();
     }
   }else{
     currentUser = null;
-    overlay.style.display = "flex";
+    booted = false;
+    overlay.style.display = 'flex';
   }
 });
 </script>
