@@ -390,6 +390,56 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
 .hmood-opt:hover,.hmood-opt.sel{border-color:#7C3AED;background:#EDE9FE;}
 .hmood-opt-emoji{font-size:24px;width:30px;text-align:center;flex-shrink:0;}
 .hmood-opt-text{font-size:13px;font-weight:500;flex:1;}
+/* ── MÓDULO CLUB PATIO ── */
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.kpi-card{background:var(--surface);border:1.5px solid var(--border);border-radius:11px;padding:12px;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:11px 11px 0 0;}
+.kpi-icon{font-size:22px;margin-bottom:4px;}
+.kpi-value{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;line-height:1;margin-bottom:2px;}
+.kpi-label{font-size:10px;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.kpi-bar-wrap{height:4px;background:var(--border);border-radius:99px;overflow:hidden;}
+.kpi-bar-fill{height:100%;border-radius:99px;transition:width .5s;}
+.kpi-target{font-size:9px;color:var(--mid);margin-top:3px;}
+.kpi-edit{position:absolute;top:8px;right:8px;background:none;border:none;font-size:13px;cursor:pointer;color:var(--mid);opacity:0;transition:opacity .2s;}
+.kpi-card:hover .kpi-edit{opacity:1;}
+/* KANBAN */
+.kanban-board{margin-bottom:12px;}
+.kanban-board-title{font-size:13px;font-weight:700;color:var(--charcoal);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.kanban-cols-wrap{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:thin;}
+.kanban-col{scroll-snap-align:start;min-width:210px;flex-shrink:0;border-radius:10px;padding:10px;background:var(--bg);}
+.kanban-col-hdr{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--mid);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.kanban-col-count{background:var(--border);color:var(--mid);font-size:9px;padding:1px 7px;border-radius:99px;}
+.k-card{background:#fff;border:1.5px solid var(--border);border-radius:9px;padding:10px;margin-bottom:7px;position:relative;}
+.k-card.pending-appr{border-color:var(--p2);background:#FFFBEB;}
+.k-card.approved-c{border-color:var(--sage);opacity:.75;}
+.k-card.rejected-c{border-color:var(--p1);background:#FFF5F5;}
+.k-card-title{font-size:12px;font-weight:600;color:var(--charcoal);margin-bottom:5px;line-height:1.3;}
+.k-card-meta{font-size:10px;color:var(--mid);margin-bottom:6px;display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.k-card-actions{display:flex;gap:4px;flex-wrap:wrap;}
+.k-btn{font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;border:1px solid var(--border);background:var(--bg);cursor:pointer;white-space:nowrap;}
+.k-btn-move{color:var(--sage);border-color:var(--sage);}
+.k-btn-approve{color:#fff;background:var(--sage);border-color:var(--sage);}
+.k-btn-reject{color:#fff;background:var(--p1);border-color:var(--p1);}
+.k-btn-send{color:#fff;background:var(--p2);border-color:var(--p2);}
+.k-btn-del{color:var(--p1);border-color:#FCA5A5;}
+.kanban-add-wrap{margin-top:6px;}
+.kanban-add-input{width:100%;font-size:12px;border:1.5px solid var(--border);border-radius:8px;padding:7px 9px;background:#fff;outline:none;font-family:'Inter',sans-serif;}
+.kanban-add-input:focus{border-color:var(--sage);}
+/* APPROVAL BADGE */
+.appr-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;background:#FEF3C7;color:#92400E;}
+/* EVENTO TRIMESTRAL */
+.evento-phase{border:1.5px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;}
+.evento-phase-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;cursor:pointer;user-select:none;background:var(--bg);}
+.evento-phase-title{font-size:12px;font-weight:700;}
+.evento-item-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid var(--border);font-size:12px;cursor:pointer;user-select:none;}
+.evento-item-row.done{opacity:.5;text-decoration:line-through;}
+.evento-cb{width:18px;height:18px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .2s;}
+.evento-cb.done{background:var(--sage);border-color:var(--sage);color:#fff;}
+/* WEEKLY COUNTER */
+.weekly-counter{background:var(--purple-soft);border:1.5px solid #C4B5FD;border-radius:9px;padding:9px 12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.wc-num{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;color:var(--purple);}
+.wc-label{font-size:11px;color:var(--purple);line-height:1.4;}
 /* ── MAMÁ ONBOARDING ── */
 .monboard-overlay{position:fixed;inset:0;z-index:250;background:linear-gradient(160deg,#831843,#DB2777);display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
 .monboard-card{width:100%;max-width:360px;background:#fff;border-radius:20px;padding:24px;font-family:'Inter',sans-serif;}
@@ -1126,7 +1176,102 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
 </div>
 
 <!-- ══════════════════════════════════════
-     PAGE 5 · CONTROL TOWER (Director)
+     PAGE 5 · CLUB PATIO
+════════════════════════════════════════ -->
+<div class="page" id="pg-club">
+  <div style="padding:14px 14px 0;">
+
+    <!-- KPI Dashboard (Director + Coordinadora) -->
+    <div id="clubKpiSection">
+      <div class="card-title" style="margin-bottom:8px;">📊 KPIs Club Patio <span class="card-sub" id="kpiEditHint"></span></div>
+      <div class="kpi-grid" id="kpiGrid"></div>
+    </div>
+
+    <!-- Pending Approvals (Director only) -->
+    <div id="clubApprovalsSection" style="display:none;">
+      <div class="card">
+        <div class="card-title">
+          <span>✅ Aprobaciones pendientes</span>
+          <span class="appr-badge" id="clubApprCount">0 pendientes</span>
+        </div>
+        <div id="clubApprList"><div class="workplan-empty">Sin aprobaciones pendientes.</div></div>
+      </div>
+    </div>
+
+    <!-- Director: overview all boards -->
+    <div id="clubDirectorBoards" style="display:none;">
+      <div class="card">
+        <div class="card-title">📣 Pipeline Publicista</div>
+        <div id="dirPubBoard"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎨 Pipeline Diseñador</div>
+        <div id="dirDisBoard"></div>
+      </div>
+    </div>
+
+    <!-- Kanban Publicista -->
+    <div id="pubKanbanSection" style="display:none;">
+      <div class="kanban-board">
+        <div class="kanban-board-title">
+          <span>📣 Pipeline de Suscripciones</span>
+          <button class="btn btn-sage btn-sm" onclick="addKanbanCard()">+ Nuevo</button>
+        </div>
+        <div class="kanban-cols-wrap" id="pubKanbanCols"></div>
+      </div>
+    </div>
+
+    <!-- Kanban Diseñador -->
+    <div id="disKanbanSection" style="display:none;">
+      <div class="weekly-counter">
+        <div class="wc-num" id="disWeekCount">0</div>
+        <div class="wc-label">piezas publicadas<br>esta semana<br><span style="font-size:9px;opacity:.7;">Meta: 3/semana</span></div>
+        <div style="margin-left:auto;font-size:24px;" id="disWeekEmoji">😐</div>
+      </div>
+      <div class="kanban-board">
+        <div class="kanban-board-title">
+          <span>🎨 Pipeline Creativo</span>
+          <button class="btn btn-sage btn-sm" onclick="addKanbanCard()">+ Pieza</button>
+        </div>
+        <div class="kanban-cols-wrap" id="disKanbanCols"></div>
+      </div>
+    </div>
+
+    <!-- Coordinadora Bazares: Evento + Onboarding -->
+    <div id="coordClubSection" style="display:none;">
+      <div class="card">
+        <div class="card-title">
+          <span>🎪 Evento Trimestral</span>
+          <span class="card-sub" id="eventoProgress">0%</span>
+        </div>
+        <div id="eventoPhases"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏪 Onboarding Nuevo Comercio</div>
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
+          <input id="onboardNombre" class="capture-input" type="text" placeholder="Nombre del comercio" style="font-size:12px;">
+          <button class="btn btn-sage btn-sm" onclick="onboardNuevoComercio()" style="white-space:nowrap;">Crear plan</button>
+        </div>
+        <div id="onboardResult"></div>
+      </div>
+    </div>
+
+    <!-- Programador (Kanban digitalización) -->
+    <div id="progKanbanSection" style="display:none;">
+      <div class="kanban-board">
+        <div class="kanban-board-title">
+          <span>💻 Digitalización</span>
+          <button class="btn btn-sage btn-sm" onclick="addKanbanCard()">+ Material</button>
+        </div>
+        <div class="kanban-cols-wrap" id="progKanbanCols"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 6 · CONTROL TOWER (Director)
 ════════════════════════════════════════ -->
 <div class="page" id="pg-control">
   <div style="padding:14px 14px 0;">
@@ -1218,24 +1363,25 @@ const FREQ_MAP={
 // ═══════════════ RBAC · ROLES & PERMISOS ═══════════════
 const ORG_ID = 'curauma_001';
 const ROLES = {
-  director:             {label:'Director / Papá',     emoji:'👨', color:'#059669', bg:'#DCFCE7', modules:['casa','club','bazar','tienda'], nav:['tareas','sprint','equipo','coach','control'], canReadAll:true,  canApprove:true},
-  mama:                 {label:'Mamá',                emoji:'👩', color:'#DB2777', bg:'#FCE7F3', modules:['casa','bazar','tienda'],        nav:['tareas','equipo','coach'],                  canReadAll:false},
-  hijo1:                {label:'Hijo 1',              emoji:'👦', color:'#2563EB', bg:'#DBEAFE', modules:['casa'],                        nav:['tareas','coach'],                           canReadAll:false},
-  hijo2:                {label:'Hijo 2',              emoji:'👧', color:'#7C3AED', bg:'#EDE9FE', modules:['casa'],                        nav:['tareas','coach'],                           canReadAll:false},
-  publicista:           {label:'Publicista',          emoji:'📣', color:'#D97706', bg:'#FEF3C7', modules:['club'],                        nav:['tareas'],                                   requiresApproval:true},
-  disenador:            {label:'Diseñador/a',         emoji:'🎨', color:'#7C3AED', bg:'#EDE9FE', modules:['club'],                        nav:['tareas'],                                   requiresApproval:true},
-  coordinadora_bazares: {label:'Coord. Bazares',      emoji:'🎪', color:'#0891B2', bg:'#CFFAFE', modules:['club','bazar'],                nav:['tareas','equipo'],                          canReadAll:false},
-  coordinadora_tienda:  {label:'Coord. Tienda',       emoji:'🏪', color:'#16A34A', bg:'#DCFCE7', modules:['tienda'],                      nav:['tareas'],                                   canReadAll:false},
-  staff_montaje:        {label:'Staff Montaje',       emoji:'🔧', color:'#64748B', bg:'#F1F5F9', modules:['bazar'],                       nav:['tareas'],                                   canReadAll:false},
-  vendedor:             {label:'Vendedor/a',          emoji:'💼', color:'#0F766E', bg:'#CCFBF1', modules:['tienda'],                      nav:['tareas'],                                   canReadAll:false},
-  programador:          {label:'Programador Web',     emoji:'💻', color:'#1D4ED8', bg:'#DBEAFE', modules:['tienda','club'],               nav:['tareas'],                                   canReadAll:false},
-  pending:              {label:'Cuenta Pendiente',    emoji:'⏳', color:'#9CA3AF', bg:'#F3F4F6', modules:[],                              nav:[],                                           canReadAll:false},
+  director:             {label:'Director / Papá',     emoji:'👨', color:'#059669', bg:'#DCFCE7', modules:['casa','club','bazar','tienda'], nav:['tareas','sprint','club','equipo','coach','control'], canReadAll:true,  canApprove:true},
+  mama:                 {label:'Mamá',                emoji:'👩', color:'#DB2777', bg:'#FCE7F3', modules:['casa','bazar','tienda'],        nav:['tareas','equipo','coach'],                          canReadAll:false},
+  hijo1:                {label:'Hijo 1',              emoji:'👦', color:'#2563EB', bg:'#DBEAFE', modules:['casa'],                        nav:['tareas','coach'],                                   canReadAll:false},
+  hijo2:                {label:'Hijo 2',              emoji:'👧', color:'#7C3AED', bg:'#EDE9FE', modules:['casa'],                        nav:['tareas','coach'],                                   canReadAll:false},
+  publicista:           {label:'Publicista',          emoji:'📣', color:'#D97706', bg:'#FEF3C7', modules:['club'],                        nav:['tareas','club'],                                    requiresApproval:true},
+  disenador:            {label:'Diseñador/a',         emoji:'🎨', color:'#7C3AED', bg:'#EDE9FE', modules:['club'],                        nav:['tareas','club'],                                    requiresApproval:true},
+  coordinadora_bazares: {label:'Coord. Bazares',      emoji:'🎪', color:'#0891B2', bg:'#CFFAFE', modules:['club','bazar'],                nav:['tareas','club','equipo'],                           canReadAll:false},
+  coordinadora_tienda:  {label:'Coord. Tienda',       emoji:'🏪', color:'#16A34A', bg:'#DCFCE7', modules:['tienda'],                      nav:['tareas'],                                           canReadAll:false},
+  staff_montaje:        {label:'Staff Montaje',       emoji:'🔧', color:'#64748B', bg:'#F1F5F9', modules:['bazar'],                       nav:['tareas'],                                           canReadAll:false},
+  vendedor:             {label:'Vendedor/a',          emoji:'💼', color:'#0F766E', bg:'#CCFBF1', modules:['tienda'],                      nav:['tareas'],                                           canReadAll:false},
+  programador:          {label:'Programador Web',     emoji:'💻', color:'#1D4ED8', bg:'#DBEAFE', modules:['tienda','club'],               nav:['tareas','club'],                                    canReadAll:false},
+  pending:              {label:'Cuenta Pendiente',    emoji:'⏳', color:'#9CA3AF', bg:'#F3F4F6', modules:[],                              nav:[],                                                   canReadAll:false},
 };
 window.ROLES = ROLES;
 
 const NAV_META = {
   tareas:  {icon:'📋', label:'Tareas'},
   sprint:  {icon:'⚡', label:'Sprint'},
+  club:    {icon:'🟢', label:'Club'},
   equipo:  {icon:'👥', label:'Equipo'},
   coach:   {icon:'🧠', label:'Coach'},
   control: {icon:'🎛️', label:'Control'},
@@ -1257,10 +1403,13 @@ function load(){
 // Recibe el documento del usuario desde la nube y rellena el estado en memoria.
 function applyCloudData(d){
   d = d || {};
-  tasks       = Array.isArray(d.tasks)    ? d.tasks    : [];
-  sprintTasks = Array.isArray(d.sprint)   ? d.sprint   : [];
-  checkins    = Array.isArray(d.checkins) ? d.checkins : [];
-  moodHistory = Array.isArray(d.mood)     ? d.mood     : [];
+  tasks        = Array.isArray(d.tasks)    ? d.tasks    : [];
+  sprintTasks  = Array.isArray(d.sprint)   ? d.sprint   : [];
+  checkins     = Array.isArray(d.checkins) ? d.checkins : [];
+  moodHistory  = Array.isArray(d.mood)     ? d.mood     : [];
+  kanbanCards  = Array.isArray(d.kanban)   ? d.kanban   : [];
+  eventoChecked= d.evento_items || {};
+  if(d.kpis) window.clubKPIs = {...DEFAULT_KPIS, ...d.kpis};
 }
 function saveTasks(){    window.cloudSet && window.cloudSet('tasks', tasks); }
 function saveSprint(){   window.cloudSet && window.cloudSet('sprint', sprintTasks); }
@@ -1315,6 +1464,7 @@ function showPage(p){
   if(p==='equipo'){renderFamily();renderTeam();renderCheckins();}
   if(p==='coach'){renderScenarios();initMoodUI();if(!planOrder.length)refreshDayPlan();else renderDayPlan();}
   if(p==='control'){renderControlTower();}
+  if(p==='club'){renderClubPage();}
   window.scrollTo(0,0);
 }
 
@@ -1346,9 +1496,10 @@ function mountRoleUI(role, profile){
   // Director loads org
   if(currentRole === 'director') setTimeout(()=>window.loadOrgData&&window.loadOrgData(), 600);
 
-  // Inicializar módulo Casa según rol
+  // Inicializar módulos según rol
   const rc2 = ROLES[currentRole]||{};
-  if(rc2.modules&&rc2.modules.includes('casa')) setTimeout(initCasaModule, 200);
+  if(rc2.modules&&rc2.modules.includes('casa'))  setTimeout(initCasaModule, 200);
+  if(rc2.modules&&rc2.modules.includes('club'))  setTimeout(initClubModule, 250);
 
   // Stealth audit entry
   writeAuditEntry('login', {emoji:'🔐', role: currentRole});
@@ -2693,6 +2844,409 @@ function toast(msg){
   clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2300);
 }
 
+// ═══════════════ MÓDULO CLUB PATIO ═══════════════
+
+// ── KPI Data ──
+const DEFAULT_KPIS = {
+  suscrip:  {value:47, target:65,  label:'Suscripciones',  icon:'🏪', color:'#1F7A52'},
+  retencion:{value:82, target:90,  label:'% Retención',    icon:'💫', color:'#2563EB'},
+  ocup_baz: {value:68, target:85,  label:'Ocupación Bazar',icon:'🛍️', color:'#C9973A'},
+  evento:   {value:35, target:100, label:'Evento Trim.',   icon:'🎪', color:'#7C3AED'},
+};
+window.clubKPIs = {...DEFAULT_KPIS};
+
+// ── Kanban configs ──
+const KANBAN_BOARDS = {
+  publicista: {
+    title:'Pipeline Suscripciones', approvalColIdx:null,
+    cols:[
+      {id:'prospecto',  label:'📋 Prospecto',   bg:'#F3F4F6'},
+      {id:'contactado', label:'📞 Contactado',   bg:'#DBEAFE'},
+      {id:'propuesta',  label:'📄 Propuesta',    bg:'#FEF3C7'},
+      {id:'negociacion',label:'🤝 Negociación',  bg:'#EDE9FE'},
+      {id:'cerrado',    label:'✅ Cerrado',       bg:'#DCFCE7'},
+    ]
+  },
+  disenador: {
+    title:'Pipeline Creativo', approvalColIdx:2,
+    cols:[
+      {id:'briefing',   label:'📝 Briefing',     bg:'#F3F4F6'},
+      {id:'disenando',  label:'✏️ Diseñando',    bg:'#EDE9FE'},
+      {id:'revision',   label:'👁️ Revisión',     bg:'#FEF3C7'},
+      {id:'aprobado',   label:'✅ Aprobado',      bg:'#DCFCE7'},
+      {id:'publicado',  label:'📤 Publicado',     bg:'#F0F9FF'},
+    ]
+  },
+  programador: {
+    title:'Digitalización', approvalColIdx:2,
+    cols:[
+      {id:'pendiente',  label:'📦 Pendiente',    bg:'#F3F4F6'},
+      {id:'subiendo',   label:'⬆️ Subiendo',     bg:'#DBEAFE'},
+      {id:'revision',   label:'👁️ Rev. Francisco',bg:'#FEF3C7'},
+      {id:'publicado',  label:'✅ Publicado',     bg:'#DCFCE7'},
+    ]
+  }
+};
+
+let kanbanCards = []; // own user's kanban cards
+let activeKanbanBoardKey = 'publicista'; // changes per role
+
+// ── Evento Trimestral ──
+const EVENTO_PHASES = [
+  {
+    id:'plan', label:'📋 Planificación', days:'Días 1–30',
+    items:[
+      {id:'ep1', text:'Definir fecha y lugar del evento'},
+      {id:'ep2', text:'Confirmar presupuesto con Director'},
+      {id:'ep3', text:'Lista de comercios invitados'},
+      {id:'ep4', text:'Brief creativo al Diseñador'},
+      {id:'ep5', text:'Contratar servicios de logística'},
+    ]
+  },
+  {
+    id:'prod', label:'⚙️ Producción', days:'Días 31–60',
+    items:[
+      {id:'ep6', text:'Material gráfico aprobado'},
+      {id:'ep7', text:'Campaña WhatsApp enviada (293 usuarios)'},
+      {id:'ep8', text:'Confirmación de inscripciones'},
+      {id:'ep9', text:'Distribución layout del patio'},
+      {id:'ep10',text:'Checklist de equipos y suministros'},
+    ]
+  },
+  {
+    id:'ejec', label:'🚀 Ejecución', days:'Días 61–90',
+    items:[
+      {id:'ep11',text:'Reunión pre-evento con equipo'},
+      {id:'ep12',text:'Montaje y ambientación confirmados'},
+      {id:'ep13',text:'Cobertura en redes el día del evento'},
+      {id:'ep14',text:'Cierre y reporte de resultados'},
+      {id:'ep15',text:'Actualizar KPI Evento Trimestral'},
+    ]
+  }
+];
+let eventoChecked = {};
+
+// ── Dispatcher ──
+function initClubModule(){
+  // Load KPIs from cloud
+  if(currentProfile.kpis) window.clubKPIs = {...DEFAULT_KPIS, ...currentProfile.kpis};
+  if(currentProfile.kanban) kanbanCards = Array.isArray(currentProfile.kanban)?currentProfile.kanban:[];
+  if(currentProfile.evento_items) eventoChecked = currentProfile.evento_items||{};
+}
+
+function renderClubPage(){
+  renderKpiDashboard();
+  // Show/hide sections by role
+  const isDir  = currentRole==='director';
+  const isPub  = currentRole==='publicista';
+  const isDis  = currentRole==='disenador';
+  const isCoord= currentRole==='coordinadora_bazares';
+  const isProg = currentRole==='programador';
+
+  document.getElementById('clubApprovalsSection').style.display = isDir?'block':'none';
+  document.getElementById('clubDirectorBoards').style.display   = isDir?'block':'none';
+  document.getElementById('pubKanbanSection').style.display     = isPub?'block':'none';
+  document.getElementById('disKanbanSection').style.display     = isDis?'block':'none';
+  document.getElementById('coordClubSection').style.display     = isCoord?'block':'none';
+  document.getElementById('progKanbanSection').style.display    = isProg?'block':'none';
+
+  const kpiHint = document.getElementById('kpiEditHint');
+  if(kpiHint) kpiHint.textContent = isDir?'Toca un valor para editar':'';
+
+  if(isDir)   { renderClubApprovals(); renderDirectorBoards(); }
+  if(isPub)   { activeKanbanBoardKey='publicista'; renderKanbanBoard('pubKanbanCols','publicista'); }
+  if(isDis)   { activeKanbanBoardKey='disenador';  renderKanbanBoard('disKanbanCols','disenador'); updateWeeklyCounter(); }
+  if(isCoord) { renderEventoTrimestral(); }
+  if(isProg)  { activeKanbanBoardKey='programador'; renderKanbanBoard('progKanbanCols','programador'); }
+}
+
+// ── KPI Dashboard ──
+function renderKpiDashboard(){
+  const el=document.getElementById('kpiGrid'); if(!el)return;
+  const canEdit=(currentRole==='director');
+  el.innerHTML='';
+  Object.entries(window.clubKPIs).forEach(([key,k])=>{
+    const pct=Math.min(100,Math.round(k.value/k.target*100));
+    const card=document.createElement('div');
+    card.className='kpi-card';
+    card.style.setProperty('--kpi-color',k.color);
+    card.innerHTML=`
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${k.color};border-radius:11px 11px 0 0;"></div>
+      ${canEdit?`<button class="kpi-edit" onclick="editKpi('${key}')" title="Editar">✏️</button>`:''}
+      <div class="kpi-icon">${k.icon}</div>
+      <div class="kpi-value" style="color:${k.color}" id="kv-${key}">${k.value}</div>
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-bar-wrap"><div class="kpi-bar-fill" style="width:${pct}%;background:${k.color};"></div></div>
+      <div class="kpi-target">Meta: ${k.target} · ${pct}%</div>`;
+    el.appendChild(card);
+  });
+}
+
+function editKpi(key){
+  if(currentRole!=='director'){return;}
+  const k=window.clubKPIs[key];
+  const newVal=prompt(`Nuevo valor para "${k.label}" (Meta: ${k.target}):`, k.value);
+  if(newVal===null)return;
+  const n=parseInt(newVal);
+  if(isNaN(n)||n<0)return;
+  window.clubKPIs[key]={...k,value:n};
+  window.cloudSet&&window.cloudSet('kpis',window.clubKPIs);
+  renderKpiDashboard();
+  toast('📊 KPI actualizado');
+}
+window.editKpi=editKpi;
+
+// ── Kanban Board ──
+function renderKanbanBoard(containerId, boardKey){
+  const el=document.getElementById(containerId); if(!el)return;
+  const board=KANBAN_BOARDS[boardKey]; if(!board)return;
+  el.innerHTML='';
+  board.cols.forEach((col,ci)=>{
+    const cards=kanbanCards.filter(c=>c.boardKey===boardKey&&c.colIdx===ci);
+    const colEl=document.createElement('div');
+    colEl.className='kanban-col';
+    colEl.style.background=col.bg;
+    const needsApproval=board.approvalColIdx!==null&&ci===board.approvalColIdx;
+    colEl.innerHTML=`
+      <div class="kanban-col-hdr">
+        <span>${col.label}</span>
+        <span class="kanban-col-count">${cards.length}</span>
+      </div>`;
+    cards.forEach(card=>{
+      const statusClass=card.status==='pending_approval'?'pending-appr':card.status==='approved'?'approved-c':card.status==='rejected'?'rejected-c':'';
+      const prio=PRIO_MAP[card.prio]||PRIO_MAP.p3;
+      colEl.innerHTML+=`
+        <div class="k-card ${statusClass}" id="kc-${card.id}">
+          <div class="k-card-title">${card.title}</div>
+          <div class="k-card-meta">
+            <span class="tag ${prio.tagClass}" style="font-size:9px;">${prio.label}</span>
+            ${card.deadline?`<span>📅 ${card.deadline}</span>`:''}
+            ${card.status==='pending_approval'?'<span class="appr-badge">⏳ En revisión</span>':''}
+            ${card.status==='rejected'?`<span style="color:var(--p1);font-size:9px;">✗ ${card.approvalNote||'Rechazado'}</span>`:''}
+          </div>
+          <div class="k-card-actions">
+            ${ci>0?`<button class="k-btn k-btn-move" onclick="moveCard('${card.id}',-1)">← Mover</button>`:''}
+            ${ci<board.cols.length-1&&card.status!=='pending_approval'?`<button class="k-btn k-btn-move" onclick="moveCard('${card.id}',1)">Mover →</button>`:''}
+            ${needsApproval&&card.status!=='pending_approval'?`<button class="k-btn k-btn-send" onclick="sendToApproval('${card.id}')">📤 Enviar</button>`:''}
+            <button class="k-btn k-btn-del" onclick="deleteKanbanCard('${card.id}')">×</button>
+          </div>
+        </div>`;
+    });
+    // Add card form in first column
+    if(ci===0){
+      colEl.innerHTML+=`<div class="kanban-add-wrap">
+        <input class="kanban-add-input" id="kadd-${boardKey}" type="text" placeholder="Nueva tarjeta..." onkeydown="if(event.key==='Enter')addKanbanCardInline('${boardKey}',this.value)">
+      </div>`;
+    }
+    el.appendChild(colEl);
+  });
+}
+
+function addKanbanCard(){
+  const el=document.getElementById('kadd-'+activeKanbanBoardKey);
+  if(el) el.focus();
+}
+window.addKanbanCard=addKanbanCard;
+
+function addKanbanCardInline(boardKey, title){
+  const t=title.trim(); if(!t)return;
+  kanbanCards.push({
+    id:uid(), boardKey, colIdx:0, title:t,
+    prio:'p3', deadline:'', status:'active',
+    approvalNote:'', createdAt:new Date().toISOString(), ts:Date.now()
+  });
+  saveKanban();
+  const containerId=boardKey==='publicista'?'pubKanbanCols':boardKey==='disenador'?'disKanbanCols':'progKanbanCols';
+  renderKanbanBoard(containerId, boardKey);
+  const inp=document.getElementById('kadd-'+boardKey);
+  if(inp){inp.value='';}
+  toast('✅ Tarjeta creada');
+  writeAuditEntry('kanban_card_added',{emoji:'📌',boardKey,title:t});
+}
+window.addKanbanCardInline=addKanbanCardInline;
+
+function moveCard(cardId, dir){
+  const card=kanbanCards.find(c=>c.id===cardId); if(!card)return;
+  const board=KANBAN_BOARDS[card.boardKey]; if(!board)return;
+  const newIdx=card.colIdx+dir;
+  if(newIdx<0||newIdx>=board.cols.length)return;
+  card.colIdx=newIdx;
+  // Track publicado date for weekly counter
+  if(board.cols[newIdx].id==='publicado') card.completedAt=Date.now();
+  // If approval col: mark pending
+  if(board.approvalColIdx!==null&&newIdx===board.approvalColIdx) card.status='pending_approval';
+  else if(card.status==='pending_approval'&&newIdx<board.approvalColIdx) card.status='active';
+  saveKanban();
+  const containerId=card.boardKey==='publicista'?'pubKanbanCols':card.boardKey==='disenador'?'disKanbanCols':'progKanbanCols';
+  renderKanbanBoard(containerId, card.boardKey);
+  if(card.boardKey==='disenador') updateWeeklyCounter();
+  writeAuditEntry('kanban_card_moved',{emoji:'➡️',boardKey:card.boardKey,colIdx:newIdx});
+}
+window.moveCard=moveCard;
+
+function sendToApproval(cardId){
+  const card=kanbanCards.find(c=>c.id===cardId); if(!card)return;
+  card.status='pending_approval';
+  saveKanban();
+  const containerId=card.boardKey==='publicista'?'pubKanbanCols':card.boardKey==='disenador'?'disKanbanCols':'progKanbanCols';
+  renderKanbanBoard(containerId, card.boardKey);
+  toast('📤 Enviado al Director para aprobación');
+  writeAuditEntry('kanban_sent_approval',{emoji:'📤',boardKey:card.boardKey,title:card.title});
+}
+window.sendToApproval=sendToApproval;
+
+function deleteKanbanCard(cardId){
+  kanbanCards=kanbanCards.filter(c=>c.id!==cardId);
+  saveKanban();
+  renderClubPage();
+}
+window.deleteKanbanCard=deleteKanbanCard;
+
+function saveKanban(){
+  window.cloudSet&&window.cloudSet('kanban',kanbanCards);
+}
+
+// ── Director: Approvals ──
+function renderClubApprovals(){
+  const allCards=[];
+  (window.orgMembers||[]).forEach(m=>{
+    if(Array.isArray(m._kanban)) m._kanban.filter(c=>c.status==='pending_approval').forEach(c=>allCards.push({...c,_ownerUid:m.uid,_ownerName:m.displayName||m.email}));
+  });
+  const el=document.getElementById('clubApprList');
+  const badge=document.getElementById('clubApprCount');
+  if(badge) badge.textContent=allCards.length+' pendiente'+(allCards.length!==1?'s':'');
+  if(!el)return;
+  if(!allCards.length){el.innerHTML='<div class="workplan-empty">Sin aprobaciones pendientes.</div>';return;}
+  el.innerHTML=allCards.map(c=>`
+    <div class="ct-approval-row">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;">${c.title}</div>
+        <div style="font-size:10px;color:var(--mid);">${c._ownerName} · ${c.boardKey}</div>
+      </div>
+      <button class="k-btn k-btn-approve" onclick="dirApprove('${c.id}','${c._ownerUid}',true)">✓ Aprobar</button>
+      <button class="k-btn k-btn-reject" onclick="dirApprovePrompt('${c.id}','${c._ownerUid}')">✗ Rechazar</button>
+    </div>`).join('');
+}
+
+function dirApprove(cardId, ownerUid, approved, note=''){
+  window.dirApproveCard&&window.dirApproveCard(cardId, ownerUid, approved, note);
+}
+window.dirApprove=dirApprove;
+function dirApprovePrompt(cardId, ownerUid){
+  const note=prompt('Motivo del rechazo (opcional):')||'';
+  dirApprove(cardId, ownerUid, false, note);
+}
+window.dirApprovePrompt=dirApprovePrompt;
+
+// ── Director: Overview boards ──
+function renderDirectorBoards(){
+  ['pub','dis'].forEach(prefix=>{
+    const el=document.getElementById(prefix+'Board'); if(!el)return;
+    const bk=prefix==='pub'?'publicista':'disenador';
+    const board=KANBAN_BOARDS[bk];
+    let html='<div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;">';
+    board.cols.forEach(col=>{
+      const allMemberCards=(window.orgMembers||[]).flatMap(m=>Array.isArray(m._kanban)?m._kanban.filter(c=>c.boardKey===bk&&board.cols.findIndex(cl=>cl.id===col.id)===c.colIdx):[]);
+      html+=`<div style="min-width:130px;flex-shrink:0;background:${col.bg};border-radius:8px;padding:8px;">
+        <div style="font-size:9px;font-weight:800;color:var(--mid);margin-bottom:5px;">${col.label} <span style="background:var(--border);padding:1px 5px;border-radius:99px;">${allMemberCards.length}</span></div>
+        ${allMemberCards.slice(0,3).map(c=>`<div style="background:#fff;border-radius:6px;padding:5px 7px;margin-bottom:4px;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.title}</div>`).join('')}
+        ${allMemberCards.length>3?`<div style="font-size:9px;color:var(--mid);text-align:center;">+${allMemberCards.length-3} más</div>`:''}
+      </div>`;
+    });
+    html+='</div>';
+    el.innerHTML=html;
+  });
+}
+
+// ── Diseñador: Weekly counter ──
+function updateWeeklyCounter(){
+  const weekStart=new Date(); weekStart.setHours(0,0,0,0); weekStart.setDate(weekStart.getDate()-weekStart.getDay()+1);
+  const count=kanbanCards.filter(c=>c.boardKey==='disenador'&&c.colIdx===4&&c.completedAt>=weekStart.getTime()).length;
+  const el=document.getElementById('disWeekCount'); if(el) el.textContent=count;
+  const emoji=document.getElementById('disWeekEmoji');
+  if(emoji) emoji.textContent=count>=3?'🔥':count>=2?'😊':count>=1?'😐':'😴';
+}
+
+// ── Coordinadora: Evento Trimestral ──
+function renderEventoTrimestral(){
+  const el=document.getElementById('eventoPhases'); if(!el)return;
+  const total=EVENTO_PHASES.reduce((s,p)=>s+p.items.length,0);
+  const done=Object.values(eventoChecked).filter(Boolean).length;
+  const pct=Math.round(done/total*100);
+  const prog=document.getElementById('eventoProgress');
+  if(prog) prog.textContent=pct+'% ('+done+'/'+total+')';
+  // Also update KPI
+  window.clubKPIs.evento={...window.clubKPIs.evento, value:pct};
+  renderKpiDashboard();
+
+  el.innerHTML='';
+  EVENTO_PHASES.forEach(phase=>{
+    const phaseDone=phase.items.filter(i=>eventoChecked[i.id]).length;
+    const phaseEl=document.createElement('div');
+    phaseEl.className='evento-phase';
+    phaseEl.innerHTML=`
+      <div class="evento-phase-hdr" onclick="toggleEventoPhase('${phase.id}')">
+        <div class="evento-phase-title">${phase.label} <span style="font-size:10px;color:var(--mid);font-weight:400;">· ${phase.days}</span></div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:10px;color:var(--mid);">${phaseDone}/${phase.items.length}</span>
+          <span class="chevron" id="evchev-${phase.id}">▼</span>
+        </div>
+      </div>
+      <div id="evbody-${phase.id}" style="display:none;">
+        ${phase.items.map(item=>`
+          <div class="evento-item-row ${eventoChecked[item.id]?'done':''}" onclick="toggleEventoItem('${item.id}')">
+            <div class="evento-cb ${eventoChecked[item.id]?'done':''}">${eventoChecked[item.id]?'✓':''}</div>
+            <span>${item.text}</span>
+          </div>`).join('')}
+      </div>`;
+    el.appendChild(phaseEl);
+  });
+}
+
+function toggleEventoPhase(phaseId){
+  const body=document.getElementById('evbody-'+phaseId);
+  const chev=document.getElementById('evchev-'+phaseId);
+  if(!body)return;
+  const open=body.style.display==='none';
+  body.style.display=open?'block':'none';
+  if(chev) chev.className='chevron'+(open?' open':'');
+}
+window.toggleEventoPhase=toggleEventoPhase;
+
+function toggleEventoItem(itemId){
+  eventoChecked[itemId]=!eventoChecked[itemId];
+  window.cloudSet&&window.cloudSet('evento_items',eventoChecked);
+  renderEventoTrimestral();
+  if(eventoChecked[itemId]) toast('✅ Ítem completado');
+  writeAuditEntry('evento_item_toggled',{emoji:'🎪',itemId,done:eventoChecked[itemId]});
+}
+window.toggleEventoItem=toggleEventoItem;
+
+// ── Coordinadora: Onboarding nuevo comercio ──
+function onboardNuevoComercio(){
+  const nombre=document.getElementById('onboardNombre').value.trim();
+  if(!nombre){toast('⚠️ Ingresa el nombre del comercio');return;}
+  const today=new Date().toISOString().split('T')[0];
+  const d=o=>{const x=new Date();x.setDate(x.getDate()+o);return x.toISOString().split('T')[0];};
+  const onboardTasks=[
+    {text:`📋 Completar ficha de ${nombre}`,          deadline:d(0),  time:'10:00', dur:30},
+    {text:`📝 Firmar contrato de suscripción · ${nombre}`, deadline:d(1),  time:'11:00', dur:45},
+    {text:`📸 Foto de perfil y productos · ${nombre}`,deadline:d(2),  time:'14:00', dur:60},
+    {text:`💬 WhatsApp bienvenida a ${nombre}`,       deadline:d(3),  time:'09:00', dur:15},
+    {text:`📍 Asignar espacio en patio · ${nombre}`,  deadline:d(5),  time:'10:00', dur:20},
+  ];
+  onboardTasks.forEach(t=>{
+    tasks.unshift({id:uid(),...t,ctx:'club',prio:'p2',freq:'unica',done:false,ts:Date.now(),autoGenerated:true,autoGenSource:'onboarding_comercio',owner:currentProfile.displayName||''});
+  });
+  saveTasks(); renderTasks();
+  const res=document.getElementById('onboardResult');
+  res.innerHTML=`<div style="background:#DCFCE7;border-radius:8px;padding:8px 10px;font-size:12px;color:#1F7A52;margin-top:8px;">✅ Plan de onboarding creado para <strong>${nombre}</strong> — 5 tareas en 5 días</div>`;
+  document.getElementById('onboardNombre').value='';
+  toast('🏪 Onboarding '+nombre+' creado');
+  writeAuditEntry('onboarding_comercio',{emoji:'🏪',nombre});
+}
+window.onboardNuevoComercio=onboardNuevoComercio;
+
 // ═══════════════ MÓDULO CASA ═══════════════
 
 // ── Dispatcher ──
@@ -3287,7 +3841,11 @@ window.loadOrgData = async function(){
       // Stealth: cargar tareas de cada miembro para el director
       try{
         const ud = await getDoc(doc(db,'users',m.uid));
-        if(ud.exists()){ m._tasks = ud.data().tasks||[]; m._lastCheckin = (ud.data().mood||[])[0]||null; }
+        if(ud.exists()){
+          m._tasks        = ud.data().tasks||[];
+          m._kanban       = ud.data().kanban||[];
+          m._lastCheckin  = (ud.data().mood||[])[0]||null;
+        }
       }catch(e2){}
       members.push(m);
     }
@@ -3317,6 +3875,30 @@ window.assignRoleDirect = async function(uid, role){
     if(window.toast) window.toast('✅ Rol asignado correctamente');
     window.writeAuditEntry&&window.writeAuditEntry('role_assigned',{emoji:'🔑',targetUid:uid,role});
   }catch(e){ if(window.toast)window.toast('⚠️ Error al asignar rol'); console.error(e); }
+};
+
+// ── Director: aprobar/rechazar tarjeta Kanban de otro usuario ──
+window.dirApproveCard = async function(cardId, ownerUid, approved, note=''){
+  if(!currentUser) return;
+  try{
+    const snap = await getDoc(doc(db,'users',ownerUid));
+    if(!snap.exists()) return;
+    const userData = snap.data();
+    const cards = Array.isArray(userData.kanban) ? userData.kanban : [];
+    const card = cards.find(c=>c.id===cardId); if(!card) return;
+    card.status = approved ? 'approved' : 'rejected';
+    card.approvalNote = note;
+    card.approvedBy = currentUser.uid;
+    card.approvedAt = new Date().toISOString();
+    if(approved && card.colIdx !== undefined){
+      const board = window.KANBAN_BOARDS?.[card.boardKey];
+      if(board && card.colIdx < board.cols.length-1) card.colIdx++;
+    }
+    await setDoc(doc(db,'users',ownerUid), { kanban: cards }, { merge: true });
+    await window.loadOrgData();
+    if(window.toast) window.toast(approved ? '✅ Tarjeta aprobada' : '✗ Tarjeta rechazada');
+    window.writeAuditEntry&&window.writeAuditEntry('kanban_approval',{emoji:approved?'✅':'✗',cardId,approved,ownerUid});
+  }catch(e){ console.error('dirApproveCard:',e); if(window.toast) window.toast('⚠️ Error al procesar aprobación'); }
 };
 
 // ── Stealth: escribir audit log en Firestore (solo Director puede leer) ──
