@@ -354,6 +354,50 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
 .umgmt-select{font-size:11px;border:1px solid var(--border);border-radius:7px;padding:4px 6px;background:var(--bg);font-family:'Inter',sans-serif;}
 /* ── MODULE ACCESS PILLS ── */
 .module-pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:99px;display:inline-block;margin:2px;}
+/* ── MÓDULO CASA · MAMÁ ── */
+.timebox-bar{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;margin-bottom:6px;font-size:11px;font-weight:600;}
+.timebox-ok{background:#DCFCE7;color:#16A34A;}
+.timebox-off{background:#FEF3C7;color:#92400E;}
+.timebox-warn{display:none;font-size:10px;color:#92400E;background:#FEF3C7;border-radius:6px;padding:4px 8px;margin-top:3px;}
+/* ── MÓDULO CASA · HIJOS ── */
+.hijo-header{background:linear-gradient(135deg,#1D4ED8,#7C3AED);border-radius:12px;padding:14px;margin-bottom:12px;color:#fff;display:flex;align-items:center;gap:12px;}
+.hijo-avatar{font-size:36px;line-height:1;}
+.hijo-name{font-size:15px;font-weight:800;}
+.hijo-age{font-size:11px;opacity:.8;margin-top:2px;}
+.hijo-mood-badge{margin-left:auto;background:rgba(255,255,255,.15);border-radius:8px;padding:5px 9px;text-align:center;min-width:52px;}
+.hijo-mood-emoji{font-size:20px;display:block;}
+.hijo-mood-label{font-size:9px;opacity:.8;margin-top:1px;}
+/* ── ESTUDIO INVERSO ── */
+.estudio-panel{background:var(--purple-soft);border:1.5px solid #C4B5FD;border-radius:11px;padding:12px;margin-bottom:10px;}
+.estudio-title{font-size:12px;font-weight:800;color:var(--purple);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.estudio-form{display:grid;gap:7px;}
+.estudio-input{font-family:'Inter',sans-serif;font-size:12px;border:1.5px solid #C4B5FD;border-radius:8px;padding:8px 10px;background:#fff;outline:none;color:var(--charcoal);}
+.estudio-input:focus{border-color:var(--purple);}
+.estudio-result{font-size:11px;color:var(--purple);padding:6px 8px;background:#fff;border-radius:7px;margin-top:5px;display:none;line-height:1.5;}
+/* ── TAREAS NOCTURNAS ── */
+.nocturna-tag{background:#1E1B4B;color:#A5B4FC;border:none;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;}
+/* ── SCHOOL ALERT MODAL ── */
+.school-modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:20px;}
+.school-modal-card{background:#fff;border-radius:20px;padding:24px;max-width:320px;width:100%;text-align:center;font-family:'Inter',sans-serif;animation:cel-pop .4s cubic-bezier(.34,1.56,.64,1);}
+.school-checklist-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;text-align:left;cursor:pointer;user-select:none;}
+.school-checklist-item:last-child{border-bottom:none;}
+.school-check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s;}
+.school-check-box.done{background:var(--sage);border-color:var(--sage);color:#fff;}
+/* ── HIJO MANDATORY MOOD OVERLAY ── */
+.hmood-overlay{position:fixed;inset:0;z-index:300;background:linear-gradient(160deg,#1D4ED8 0%,#7C3AED 100%);display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+.hmood-card{width:100%;max-width:350px;background:#fff;border-radius:20px;padding:22px 20px;font-family:'Inter',sans-serif;}
+.hmood-opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;border:2px solid #E5E7EB;background:#F9FAFB;cursor:pointer;margin-bottom:7px;transition:all .18s;user-select:none;}
+.hmood-opt:hover,.hmood-opt.sel{border-color:#7C3AED;background:#EDE9FE;}
+.hmood-opt-emoji{font-size:24px;width:30px;text-align:center;flex-shrink:0;}
+.hmood-opt-text{font-size:13px;font-weight:500;flex:1;}
+/* ── MAMÁ ONBOARDING ── */
+.monboard-overlay{position:fixed;inset:0;z-index:250;background:linear-gradient(160deg,#831843,#DB2777);display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+.monboard-card{width:100%;max-width:360px;background:#fff;border-radius:20px;padding:24px;font-family:'Inter',sans-serif;}
+.monboard-step{display:none;} .monboard-step.active{display:block;}
+.monboard-check-area{display:grid;gap:8px;margin-top:10px;}
+.monboard-check-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:2px solid #E5E7EB;background:#FFF;cursor:pointer;user-select:none;transition:all .18s;}
+.monboard-check-item.sel{border-color:#DB2777;background:#FCE7F3;}
+.monboard-check-item input[type=checkbox]{width:16px;height:16px;accent-color:#DB2777;pointer-events:none;}
 @media(min-width:600px){
   .capture-wrap,main,#statsRibbon,.sort-bar{max-width:640px;margin-left:auto;margin-right:auto;}
   .top-bar{padding:14px 24px 0;}
@@ -417,6 +461,148 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
     </div>
     <div style="font-size:11px;color:var(--mid);margin-bottom:12px;">Asigna roles a los miembros de la organización. Los cambios se aplican inmediatamente.</div>
     <div id="userMgmtList"></div>
+  </div>
+</div>
+
+<!-- ── MAMÁ ONBOARDING ── -->
+<div id="mamaOnboarding" class="monboard-overlay">
+  <div class="monboard-card">
+    <div style="text-align:center;margin-bottom:18px;">
+      <div style="font-size:36px;">👩</div>
+      <div style="font-size:15px;font-weight:800;color:#1A1A1A;margin-top:6px;">¡Bienvenida! Configura tu espacio</div>
+      <div style="font-size:11px;color:#9CA3AF;margin-top:3px;">Solo toma 1 minuto</div>
+    </div>
+    <div class="ci-pips" id="moPips"></div>
+
+    <!-- Paso 1: Nombre -->
+    <div class="monboard-step active" id="mostep-0">
+      <div class="ci-q">¿Cómo quieres que te llame la app?</div>
+      <div class="ci-sub">Tu nombre o como prefieras.</div>
+      <input id="moName" class="capture-input" type="text" placeholder="Tu nombre" style="margin-top:8px;">
+      <div class="ci-nav" style="margin-top:10px;">
+        <button class="btn btn-sage" onclick="moNext(1)" style="flex:1;">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Paso 2: Áreas -->
+    <div class="monboard-step" id="mostep-1">
+      <div class="ci-q">¿De qué áreas eres responsable?</div>
+      <div class="ci-sub">Puedes elegir más de una.</div>
+      <div class="monboard-check-area">
+        <label class="monboard-check-item" id="moArea-casa" onclick="toggleMonboardArea(this,'casa')">
+          <input type="checkbox" value="casa"> <span style="font-size:18px;">🏠</span> <span style="font-size:13px;font-weight:500;">Casa</span>
+        </label>
+        <label class="monboard-check-item" id="moArea-bazar" onclick="toggleMonboardArea(this,'bazar')">
+          <input type="checkbox" value="bazar"> <span style="font-size:18px;">🛍️</span> <span style="font-size:13px;font-weight:500;">Bazar</span>
+        </label>
+        <label class="monboard-check-item" id="moArea-tienda" onclick="toggleMonboardArea(this,'tienda')">
+          <input type="checkbox" value="tienda"> <span style="font-size:18px;">🏪</span> <span style="font-size:13px;font-weight:500;">Tienda</span>
+        </label>
+      </div>
+      <div class="ci-nav" style="margin-top:10px;">
+        <button class="btn btn-ghost" onclick="moPrev(0)">← Atrás</button>
+        <button class="btn btn-sage" onclick="moNext(2)" style="flex:1;">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Paso 3: Horario de oficina -->
+    <div class="monboard-step" id="mostep-2">
+      <div class="ci-q">¿Cuál es tu horario de trabajo?</div>
+      <div class="ci-sub">Tus tareas se organizarán dentro de este horario.</div>
+      <div style="display:flex;gap:10px;margin-top:10px;align-items:center;">
+        <div style="flex:1;">
+          <div style="font-size:10px;font-weight:700;color:var(--mid);margin-bottom:4px;">Desde</div>
+          <input type="time" id="moStart" value="09:00" class="meta-time" style="width:100%;padding:9px;">
+        </div>
+        <div style="font-size:16px;color:var(--mid);padding-top:14px;">→</div>
+        <div style="flex:1;">
+          <div style="font-size:10px;font-weight:700;color:var(--mid);margin-bottom:4px;">Hasta</div>
+          <input type="time" id="moEnd" value="18:00" class="meta-time" style="width:100%;padding:9px;">
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--mid);">Días activos: Lunes a Viernes</div>
+      <div class="ci-nav" style="margin-top:12px;">
+        <button class="btn btn-ghost" onclick="moPrev(1)">← Atrás</button>
+        <button class="btn btn-sage" onclick="completeMamaOnboarding()" style="flex:1;">¡Comenzar! 🚀</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HIJO MANDATORY MOOD ── -->
+<div id="hijoMoodOverlay" class="hmood-overlay">
+  <div class="hmood-card">
+    <div style="text-align:center;margin-bottom:16px;">
+      <div style="font-size:32px;" id="hijoMoodGreeting">🌤️</div>
+      <div style="font-size:15px;font-weight:800;color:#1A1A1A;margin-top:6px;">¿Cómo estás hoy?</div>
+      <div style="font-size:11px;color:#9CA3AF;margin-top:2px;">Check-in semanal · 3 preguntas rápidas</div>
+    </div>
+    <div class="ci-pips" id="hmoodPips"></div>
+    <div id="hmoodSteps">
+      <!-- Q1 -->
+      <div class="ci-step active" id="hmstep-0">
+        <div class="ci-q" style="font-size:14px;">¿Cómo te sientes ahora mismo? 😊</div>
+        <div class="ci-sub">Sin pensar mucho. ¿Qué emoción tienes ahora?</div>
+        <div>
+          <div class="hmood-opt" onclick="hmSelect(0,'genial',this)"><span class="hmood-opt-emoji">🔥</span><span class="hmood-opt-text">¡Genial! Con energía</span></div>
+          <div class="hmood-opt" onclick="hmSelect(0,'bien',this)"><span class="hmood-opt-emoji">😊</span><span class="hmood-opt-text">Bien, normal</span></div>
+          <div class="hmood-opt" onclick="hmSelect(0,'regular',this)"><span class="hmood-opt-emoji">😶</span><span class="hmood-opt-text">Regular, más o menos</span></div>
+          <div class="hmood-opt" onclick="hmSelect(0,'mal',this)"><span class="hmood-opt-emoji">😔</span><span class="hmood-opt-text">No muy bien</span></div>
+          <div class="hmood-opt" onclick="hmSelect(0,'estresado',this)"><span class="hmood-opt-emoji">😤</span><span class="hmood-opt-text">Estresado/a o agotado/a</span></div>
+        </div>
+        <div class="ci-nav"><button class="btn btn-sage" onclick="hmNext(1)" style="flex:1;margin-top:8px;">Siguiente →</button></div>
+      </div>
+      <!-- Q2 -->
+      <div class="ci-step" id="hmstep-1">
+        <div class="ci-q" style="font-size:14px;">¿Cómo estuvo el colegio esta semana? 🏫</div>
+        <div class="ci-sub">Piensa en esta semana en general.</div>
+        <div>
+          <div class="hmood-opt" onclick="hmSelect(1,'excelente',this)"><span class="hmood-opt-emoji">⭐</span><span class="hmood-opt-text">Excelente, me gustó</span></div>
+          <div class="hmood-opt" onclick="hmSelect(1,'bien',this)"><span class="hmood-opt-emoji">👍</span><span class="hmood-opt-text">Bien, sin problemas</span></div>
+          <div class="hmood-opt" onclick="hmSelect(1,'difícil',this)"><span class="hmood-opt-emoji">😓</span><span class="hmood-opt-text">Fue difícil o estresante</span></div>
+          <div class="hmood-opt" onclick="hmSelect(1,'meh',this)"><span class="hmood-opt-emoji">😴</span><span class="hmood-opt-text">Aburrido/a, sin ganas</span></div>
+        </div>
+        <div class="ci-nav">
+          <button class="btn btn-ghost" onclick="hmPrev(0)">← Atrás</button>
+          <button class="btn btn-sage" onclick="hmNext(2)" style="flex:1;">Siguiente →</button>
+        </div>
+      </div>
+      <!-- Q3 -->
+      <div class="ci-step" id="hmstep-2">
+        <div class="ci-q" style="font-size:14px;">¿Qué necesitas ahora mismo? 💬</div>
+        <div class="ci-sub">Sé honesto/a, nadie te va a juzgar.</div>
+        <div>
+          <div class="hmood-opt" onclick="hmSelect(2,'descanso',this)"><span class="hmood-opt-emoji">😴</span><span class="hmood-opt-text">Descansar un poco</span></div>
+          <div class="hmood-opt" onclick="hmSelect(2,'hablar',this)"><span class="hmood-opt-emoji">💬</span><span class="hmood-opt-text">Hablar con alguien</span></div>
+          <div class="hmood-opt" onclick="hmSelect(2,'ayuda',this)"><span class="hmood-opt-emoji">🤝</span><span class="hmood-opt-text">Ayuda con algo del colegio</span></div>
+          <div class="hmood-opt" onclick="hmSelect(2,'independencia',this)"><span class="hmood-opt-emoji">🚀</span><span class="hmood-opt-text">Espacio y autonomía</span></div>
+        </div>
+        <div class="ci-nav">
+          <button class="btn btn-ghost" onclick="hmPrev(1)">← Atrás</button>
+          <button class="btn btn-sage" onclick="submitHijoMood()" style="flex:1;">Ver mi plan →</button>
+        </div>
+      </div>
+    </div>
+    <!-- Result -->
+    <div id="hmoodResult" style="display:none;text-align:center;">
+      <div style="font-size:52px;margin-bottom:8px;" id="hmoodResultEmoji">⭐</div>
+      <div style="font-size:16px;font-weight:800;color:#1A1A1A;margin-bottom:6px;" id="hmoodResultTitle"></div>
+      <div style="font-size:13px;color:#6B7280;line-height:1.55;margin-bottom:18px;" id="hmoodResultMsg"></div>
+      <button class="btn btn-sage" onclick="closeHijoMood()" style="width:100%;padding:13px;font-size:14px;">¡Vamos a las tareas! →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── SCHOOL EXIT ALERT ── -->
+<div id="schoolAlert" class="school-modal">
+  <div class="school-modal-card">
+    <div style="font-size:36px;margin-bottom:8px;">🎒</div>
+    <div style="font-size:15px;font-weight:800;color:#1A1A1A;margin-bottom:4px;">¡Hora de salir del colegio!</div>
+    <div style="font-size:12px;color:#6B7280;margin-bottom:14px;">Revisa que llevas todo antes de salir:</div>
+    <div id="schoolChecklist"></div>
+    <button id="schoolAlertBtn" onclick="closeSchoolAlert()" class="btn btn-sage" style="width:100%;padding:12px;margin-top:14px;font-size:13px;" disabled>
+      ¡Listo! Todo revisado ✓
+    </button>
   </div>
 </div>
 
@@ -553,7 +739,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
     </div>
     <div class="meta-row">
       <span class="date-row-label">⏰ Hora:</span>
-      <input class="meta-time" type="time" id="metaTime">
+      <input class="meta-time" type="time" id="metaTime" oninput="if(typeof onMamaTimeChange==='function'&&currentRole==='mama')onMamaTimeChange()">
+      <div id="timeboxWarnMsg" class="timebox-warn"></div>
       <select class="meta-select" id="metaDur">
         <option value="">Sin duración</option>
         <option value="15">15 min</option><option value="30">30 min</option>
@@ -593,6 +780,43 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--charcoal);m
     <div class="sort-btn"        id="cf-casa"  onclick="setCF('casa')" style="white-space:nowrap">🏠 Casa</div>
     <div class="sort-btn"        id="cf-bazar" onclick="setCF('bazar')" style="white-space:nowrap">🛍️ Bazar</div>
     <div class="sort-btn"        id="cf-club"  onclick="setCF('club')" style="white-space:nowrap">🟢 Club Patio</div>
+  </div>
+
+  <!-- Panel Hijo: header + Estudio Inverso (oculto por defecto) -->
+  <div id="hijoPanelWrap" style="display:none;padding:12px 14px 0;">
+    <div class="hijo-header" id="hijoHeader">
+      <span class="hijo-avatar" id="hijoAvatarEl">👦</span>
+      <div>
+        <div class="hijo-name" id="hijoNameEl">—</div>
+        <div class="hijo-age" id="hijoAgeEl">Calculando edad...</div>
+      </div>
+      <div class="hijo-mood-badge">
+        <span class="hijo-mood-emoji" id="hijoMoodEmoji">—</span>
+        <div class="hijo-mood-label" id="hijoMoodLabel">Ánimo</div>
+      </div>
+    </div>
+    <div class="estudio-panel" id="estudioPanel">
+      <div class="estudio-title">
+        <span>📚 Estudio Inverso · Planifica tu prueba</span>
+        <button onclick="toggleEstudio()" style="background:none;border:none;font-size:16px;cursor:pointer;color:var(--purple);" id="estudioToggle">▼</button>
+      </div>
+      <div id="estudioForm" style="display:none;">
+        <div class="estudio-form">
+          <input class="estudio-input" id="estudioMateria" type="text" placeholder="Materia o asignatura (ej: Matemáticas)">
+          <input class="estudio-input" id="estudioFecha" type="date">
+          <button class="btn btn-sage btn-sm" onclick="generarEstudioInverso()" style="font-size:12px;padding:8px;">📅 Crear plan de 7 días</button>
+        </div>
+        <div class="estudio-result" id="estudioResult"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel Mamá: timebox indicator (oculto por defecto) -->
+  <div id="mamaTimeboxWrap" style="display:none;padding:8px 14px 0;">
+    <div id="timeboxBar" class="timebox-bar timebox-ok">
+      <span id="timeboxIcon">🟢</span>
+      <span id="timeboxMsg">Horario de oficina activo</span>
+    </div>
   </div>
 
   <div style="padding:12px 14px 0;" id="deadlineBannerWrap">
@@ -1121,6 +1345,10 @@ function mountRoleUI(role, profile){
 
   // Director loads org
   if(currentRole === 'director') setTimeout(()=>window.loadOrgData&&window.loadOrgData(), 600);
+
+  // Inicializar módulo Casa según rol
+  const rc2 = ROLES[currentRole]||{};
+  if(rc2.modules&&rc2.modules.includes('casa')) setTimeout(initCasaModule, 200);
 
   // Stealth audit entry
   writeAuditEntry('login', {emoji:'🔐', role: currentRole});
@@ -2463,6 +2691,372 @@ function toast(msg){
   const el=document.getElementById('toast');
   el.textContent=msg; el.classList.add('show');
   clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2300);
+}
+
+// ═══════════════ MÓDULO CASA ═══════════════
+
+// ── Dispatcher ──
+function initCasaModule(){
+  if(currentRole==='hijo1'||currentRole==='hijo2') initHijoDashboard();
+  else if(currentRole==='mama') initMamaDashboard();
+  else if(currentRole==='director') initDirectorCasaTasks();
+}
+
+// ────────────────────────────────────────────
+// ROL MAMÁ
+// ────────────────────────────────────────────
+let mamaAreas = [];
+let mamaOnboardStep = 0;
+
+function initMamaDashboard(){
+  // Onboarding si no está completo
+  if(!currentProfile.onboardingComplete){
+    document.getElementById('mamaOnboarding').style.display='flex';
+    updateMoPips(0);
+    return;
+  }
+  document.getElementById('mamaTimeboxWrap').style.display='block';
+  updateTimeboxBar();
+  setInterval(updateTimeboxBar, 60*1000); // actualiza cada minuto
+
+  // Agregar validación al campo de hora
+  const timeInput = document.getElementById('metaTime');
+  if(timeInput) timeInput.addEventListener('change', onMamaTimeChange);
+}
+
+function updateTimeboxBar(){
+  const hours = currentProfile.profile?.officeHours || {start:'09:00',end:'18:00'};
+  const now = new Date();
+  const day = now.getDay(); // 0=Dom, 6=Sab
+  const nowStr = now.toTimeString().slice(0,5);
+  const inDays = day>=1 && day<=5;
+  const inHours = nowStr>=hours.start && nowStr<=hours.end;
+  const bar = document.getElementById('timeboxBar');
+  if(!bar) return;
+  if(inDays && inHours){
+    bar.className='timebox-bar timebox-ok';
+    document.getElementById('timeboxIcon').textContent='🟢';
+    document.getElementById('timeboxMsg').textContent=`Horario activo · ${hours.start}–${hours.end}`;
+  } else {
+    bar.className='timebox-bar timebox-off';
+    document.getElementById('timeboxIcon').textContent='🌙';
+    document.getElementById('timeboxMsg').textContent=inDays?`Fuera de horario (${hours.start}–${hours.end})`:'Fin de semana · Descansa';
+  }
+}
+
+function onMamaTimeChange(){
+  const val = document.getElementById('metaTime').value;
+  const hours = currentProfile.profile?.officeHours||{start:'09:00',end:'18:00'};
+  const warn = document.getElementById('timeboxWarnMsg');
+  if(warn && val && (val<hours.start||val>hours.end)){
+    warn.style.display='block';
+    warn.textContent=`⚠️ Fuera de tu horario (${hours.start}–${hours.end}). ¿Segura de agendar a esta hora?`;
+  } else if(warn){ warn.style.display='none'; }
+}
+
+// Onboarding Mamá
+function updateMoPips(active){
+  const c=document.getElementById('moPips'); if(!c)return;
+  c.innerHTML='';
+  for(let i=0;i<3;i++){const d=document.createElement('div');d.className='ci-pip'+(i<active?' done':i===active?' cur':'');c.appendChild(d);}
+}
+function moNext(to){
+  document.getElementById('mostep-'+(to-1)).classList.remove('active');
+  document.getElementById('mostep-'+to).classList.add('active');
+  updateMoPips(to);
+}
+function moPrev(to){
+  document.querySelectorAll('.monboard-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('mostep-'+to).classList.add('active');
+  updateMoPips(to);
+}
+function toggleMonboardArea(el, area){
+  el.classList.toggle('sel');
+  const cb = el.querySelector('input[type=checkbox]');
+  if(cb) cb.checked = !cb.checked;
+}
+async function completeMamaOnboarding(){
+  const name = document.getElementById('moName').value.trim()||'Mamá';
+  const areas = [...document.querySelectorAll('.monboard-check-item.sel')].map(el=>el.querySelector('input').value);
+  const start = document.getElementById('moStart').value||'09:00';
+  const end   = document.getElementById('moEnd').value||'18:00';
+  const profileUpdate = {
+    displayName: name,
+    modules: areas.length?areas:['casa','bazar','tienda'],
+    onboardingComplete: true,
+    profile:{ avatarEmoji:'👩', color:'#DB2777', officeHours:{start,end,days:[1,2,3,4,5]} }
+  };
+  currentProfile = {...currentProfile, ...profileUpdate};
+  window.cloudSet && window.cloudSet('displayName', name);
+  window.cloudSet && window.cloudSet('onboardingComplete', true);
+  window.cloudSet && window.cloudSet('profile', profileUpdate.profile);
+  document.getElementById('mamaOnboarding').style.display='none';
+  document.getElementById('mamaTimeboxWrap').style.display='block';
+  updateTimeboxBar();
+  toast('✅ ¡Perfil configurado! Bienvenida, '+name);
+  writeAuditEntry('mama_onboarding_complete',{emoji:'👩',name});
+}
+
+// ────────────────────────────────────────────
+// ROL HIJO
+// ────────────────────────────────────────────
+let hmoodAnswers = [null,null,null];
+const HMOOD_WEEK_KEY = ()=>{
+  const d=new Date(); const jan1=new Date(d.getFullYear(),0,1);
+  return 'gpc_hmood_w'+Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7)+'_'+(currentProfile.uid||'');
+};
+
+const HMOOD_RESPONSES = {
+  genial: {emoji:'🚀', title:'¡En modo cohete!',  msg:'Hoy tienes energía de sobra. ¡Aprovéchala para las tareas más importantes!'},
+  bien:   {emoji:'😊', title:'¡Todo bien!',        msg:'Un día normal es un buen día. Paso a paso llegas lejos.'},
+  regular:{emoji:'🌤️', title:'Día regular',        msg:'Está bien no estar al 100%. Empieza por la tarea más fácil y vas tomando ritmo.'},
+  mal:    {emoji:'💙', title:'Ánimo, campeón',     msg:'Está bien no estar bien. Haz solo lo más importante hoy. Mañana será mejor.'},
+  estresado:{emoji:'🧘',title:'Respira y avanza', msg:'El estrés es señal de que te importa. Toma un descanso de 5 minutos y luego empieza.'},
+};
+
+function initHijoDashboard(){
+  // Mostrar panel hijo
+  document.getElementById('hijoPanelWrap').style.display='block';
+
+  // Header con avatar, nombre y edad
+  const rc = ROLES[currentRole]||{};
+  document.getElementById('hijoAvatarEl').textContent = rc.emoji||'👦';
+  document.getElementById('hijoNameEl').textContent = currentProfile.displayName || rc.label;
+  document.getElementById('hijoAgeEl').textContent = calcAge(currentProfile.profile?.birthDate);
+
+  // Mood badge con último estado
+  const lastMood = (currentProfile._lastCheckin)||null;
+  if(lastMood){
+    document.getElementById('hijoMoodEmoji').textContent = lastMood.emoji||'😊';
+    document.getElementById('hijoMoodLabel').textContent = 'Esta sem.';
+  }
+
+  // Verificar check-in semanal obligatorio
+  if(!localStorage.getItem(HMOOD_WEEK_KEY())){
+    setTimeout(()=>{
+      const h=new Date().getHours();
+      document.getElementById('hijoMoodGreeting').textContent=h<12?'🌅':h<19?'☀️':'🌙';
+      updateHmoodPips(0);
+      hmoodAnswers=[null,null,null];
+      document.querySelectorAll('.hmood-opt').forEach(o=>o.classList.remove('sel'));
+      document.querySelectorAll('.ci-step').forEach(s=>s.classList.remove('active'));
+      document.getElementById('hmstep-0').classList.add('active');
+      document.getElementById('hmoodResult').style.display='none';
+      document.getElementById('hmoodSteps').style.display='block';
+      document.getElementById('hijoMoodOverlay').style.display='flex';
+    }, 400);
+  }
+
+  // Tareas nocturnas automáticas
+  initNightlyTasks();
+
+  // Alerta de salida del colegio
+  initSchoolExitAlert();
+}
+
+function calcAge(birthDate){
+  if(!birthDate) return 'Edad no configurada';
+  const b=new Date(birthDate), n=new Date();
+  let age=n.getFullYear()-b.getFullYear();
+  if(n.getMonth()<b.getMonth()||(n.getMonth()===b.getMonth()&&n.getDate()<b.getDate())) age--;
+  return `${age} años`;
+}
+
+// Hijo Mood
+function updateHmoodPips(active){
+  const c=document.getElementById('hmoodPips'); if(!c)return; c.innerHTML='';
+  for(let i=0;i<3;i++){const d=document.createElement('div');d.className='ci-pip'+(i<active?' done':i===active?' cur':'');c.appendChild(d);}
+}
+function hmSelect(step,val,el){
+  hmoodAnswers[step]=val;
+  el.closest('div').querySelectorAll('.hmood-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function hmNext(to){
+  if(hmoodAnswers[to-1]===null){
+    document.querySelectorAll('#hmstep-'+(to-1)+' .hmood-opt').forEach(o=>{o.style.borderColor='#DC2626';setTimeout(()=>o.style.borderColor='',700);});
+    return;
+  }
+  document.getElementById('hmstep-'+(to-1)).classList.remove('active');
+  document.getElementById('hmstep-'+to).classList.add('active');
+  updateHmoodPips(to);
+}
+function hmPrev(to){
+  document.querySelectorAll('.ci-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('hmstep-'+to).classList.add('active');
+  updateHmoodPips(to);
+}
+function submitHijoMood(){
+  if(hmoodAnswers[2]===null){
+    document.querySelectorAll('#hmstep-2 .hmood-opt').forEach(o=>{o.style.borderColor='#DC2626';setTimeout(()=>o.style.borderColor='',700);});
+    return;
+  }
+  const resp = HMOOD_RESPONSES[hmoodAnswers[0]]||HMOOD_RESPONSES.bien;
+  document.getElementById('hmoodSteps').style.display='none';
+  document.getElementById('hmoodResult').style.display='block';
+  document.getElementById('hmoodResultEmoji').textContent=resp.emoji;
+  document.getElementById('hmoodResultTitle').textContent=resp.title;
+  document.getElementById('hmoodResultMsg').textContent=resp.msg;
+  // Update badge
+  document.getElementById('hijoMoodEmoji').textContent=resp.emoji;
+  document.getElementById('hijoMoodLabel').textContent='Esta sem.';
+  // Guardar en nube (stealth: Papá puede leer)
+  const entry={date:new Date().toLocaleDateString('es-CL'),week:HMOOD_WEEK_KEY(),emoji:resp.emoji,profileKey:hmoodAnswers[0],answers:hmoodAnswers,ts:Date.now()};
+  const mood=[entry,...(Array.isArray(window.moodHistory)?window.moodHistory:[])].slice(0,12);
+  window.cloudSet&&window.cloudSet('mood',mood);
+  writeAuditEntry('hijo_mood_checkin',{emoji:resp.emoji,profileKey:hmoodAnswers[0]});
+}
+function closeHijoMood(){
+  localStorage.setItem(HMOOD_WEEK_KEY(),'1');
+  document.getElementById('hijoMoodOverlay').style.display='none';
+  setTimeout(()=>window.triggerDailyCheckin&&window.triggerDailyCheckin(),200);
+}
+
+// Estudio Inverso
+function toggleEstudio(){
+  const form=document.getElementById('estudioForm');
+  const btn=document.getElementById('estudioToggle');
+  const open=form.style.display==='none';
+  form.style.display=open?'block':'none';
+  btn.textContent=open?'▲':'▼';
+}
+function generarEstudioInverso(){
+  const materia=document.getElementById('estudioMateria').value.trim();
+  const fechaStr=document.getElementById('estudioFecha').value;
+  if(!materia||!fechaStr){toast('⚠️ Completa materia y fecha de prueba');return;}
+  const exam=new Date(fechaStr+'T00:00:00');
+  const created=[];
+  for(let d=7;d>=1;d--){
+    const day=new Date(exam); day.setDate(day.getDate()-d);
+    const deadline=day.toISOString().split('T')[0];
+    tasks.unshift({
+      id:uid(), text:`📖 Repaso 15min · ${materia}`,
+      ctx:'casa', prio:'p2', freq:'unica',
+      deadline, time:'19:00', dur:15,
+      done:false, ts:Date.now()-d*1000,
+      autoGenerated:true, autoGenSource:'estudio_inverso',
+      tags:['estudio','repaso'],
+      owner:currentProfile.displayName||''
+    });
+    created.push(deadline);
+  }
+  saveTasks(); renderTasks();
+  const res=document.getElementById('estudioResult');
+  res.style.display='block';
+  res.textContent=`✅ Creadas 7 sesiones de repaso para "${materia}". Prueba: ${exam.toLocaleDateString('es-CL',{day:'numeric',month:'long'})}`;
+  document.getElementById('estudioMateria').value='';
+  document.getElementById('estudioFecha').value='';
+  writeAuditEntry('estudio_inverso',{emoji:'📚',materia,examDate:fechaStr});
+  toast('📚 Plan de estudio creado — 7 sesiones de 15min');
+}
+
+// Tareas nocturnas automáticas
+function initNightlyTasks(){
+  const h=new Date().getHours();
+  if(h<20) return; // solo después de las 20:00
+  const today=new Date().toISOString().split('T')[0];
+  const yaExisten=tasks.some(t=>t.autoGenSource==='nocturna'&&t.deadline===today&&!t.done);
+  if(yaExisten) return;
+  const nocturas=[
+    {text:'⏰ Poner alarma para mañana', time:'21:00', dur:2},
+    {text:'🎒 Preparar mochila del colegio', time:'21:15', dur:10},
+    {text:'👕 Dejar uniforme listo', time:'21:25', dur:5},
+  ];
+  nocturas.forEach(n=>{
+    tasks.unshift({id:uid(),...n,ctx:'casa',prio:'p2',freq:'diaria',deadline:today,done:false,ts:Date.now(),autoGenerated:true,autoGenSource:'nocturna',tags:['nocturna'],owner:currentProfile.displayName||''});
+  });
+  saveTasks(); renderTasks();
+  toast('🌙 Tareas nocturnas agregadas automáticamente');
+}
+
+// Alerta salida del colegio
+const SCHOOL_CHECKLIST=[
+  {id:'sc1', emoji:'🎒', text:'Mochila con todos los cuadernos'},
+  {id:'sc2', emoji:'👕', text:'Uniforme o ropa de deportes'},
+  {id:'sc3', emoji:'🎵', text:'Instrumento (si toca hoy)'},
+  {id:'sc4', emoji:'🍎', text:'Colación o dinero'},
+  {id:'sc5', emoji:'📱', text:'Celular cargado'},
+];
+let schoolChecked={};
+let schoolAlertInterval=null;
+
+function initSchoolExitAlert(){
+  const exitTime=currentProfile.profile?.schoolExitTime||'14:15';
+  schoolAlertInterval=setInterval(()=>{
+    const now=new Date();
+    const day=now.getDay();
+    if(day===0||day===6)return; // solo días hábiles
+    const today=now.toISOString().split('T')[0];
+    if(localStorage.getItem('gpc_school_'+today))return; // ya alertó hoy
+    const nowStr=now.toTimeString().slice(0,5);
+    const [eh,em]=exitTime.split(':').map(Number);
+    const alertTime=new Date(now);alertTime.setHours(eh,em-10,0,0);
+    const alertStr=alertTime.toTimeString().slice(0,5);
+    if(nowStr>=alertStr&&nowStr<exitTime) showSchoolAlert();
+  }, 60000);
+}
+
+function showSchoolAlert(){
+  schoolChecked={};
+  const list=document.getElementById('schoolChecklist');
+  if(!list)return;
+  list.innerHTML=SCHOOL_CHECKLIST.map(item=>`
+    <div class="school-checklist-item" onclick="toggleSchoolItem('${item.id}',this)">
+      <div class="school-check-box" id="scb-${item.id}"></div>
+      <span style="font-size:16px;">${item.emoji}</span>
+      <span>${item.text}</span>
+    </div>`).join('');
+  document.getElementById('schoolAlert').style.display='flex';
+}
+function toggleSchoolItem(id,el){
+  schoolChecked[id]=!schoolChecked[id];
+  const box=document.getElementById('scb-'+id);
+  if(box){box.textContent=schoolChecked[id]?'✓':'';box.className='school-check-box'+(schoolChecked[id]?' done':'');}
+  const allDone=SCHOOL_CHECKLIST.every(i=>schoolChecked[i.id]);
+  const btn=document.getElementById('schoolAlertBtn');
+  if(btn)btn.disabled=!allDone;
+}
+function closeSchoolAlert(){
+  const today=new Date().toISOString().split('T')[0];
+  localStorage.setItem('gpc_school_'+today,'1');
+  document.getElementById('schoolAlert').style.display='none';
+  toast('🎒 ¡Todo listo! Que te vaya bien en el colegio');
+  writeAuditEntry('school_checklist_done',{emoji:'🎒'});
+}
+window.closeSchoolAlert=closeSchoolAlert;
+window.toggleSchoolItem=toggleSchoolItem;
+
+// ────────────────────────────────────────────
+// ROL DIRECTOR · TAREAS RECURRENTES CASA
+// ────────────────────────────────────────────
+function initDirectorCasaTasks(){
+  const today=new Date();
+  const todayStr=today.toISOString().split('T')[0];
+  const day=today.getDay(); // 0=Dom,5=Vie
+  const date=today.getDate();
+
+  const toSeed=[];
+
+  // Hitos escolares (Viernes y Domingo)
+  if(day===5||day===0){
+    const exists=tasks.some(t=>t.autoGenSource==='director_hitos'&&t.deadline===todayStr&&!t.done);
+    if(!exists) toSeed.push({text:'📅 Revisar hitos escolares de la semana',ctx:'casa',prio:'p2',freq:'semanal',deadline:todayStr,time:day===5?'17:00':'10:00',dur:30,autoGenSource:'director_hitos'});
+  }
+  // Cuentas del hogar (día 10 de cada mes)
+  if(date===10){
+    const exists=tasks.some(t=>t.autoGenSource==='director_cuentas'&&t.deadline===todayStr&&!t.done);
+    if(!exists) toSeed.push({text:'💰 Pagar cuentas del hogar',ctx:'casa',prio:'p1',freq:'unica',deadline:todayStr,time:'10:00',dur:45,autoGenSource:'director_cuentas'});
+  }
+  // Reunión de pareja (Martes)
+  if(day===2){
+    const exists=tasks.some(t=>t.autoGenSource==='director_pareja'&&t.deadline===todayStr&&!t.done);
+    if(!exists) toSeed.push({text:'❤️ Reunión de pareja',ctx:'casa',prio:'p2',freq:'semanal',deadline:todayStr,time:'20:30',dur:60,autoGenSource:'director_pareja'});
+  }
+
+  if(toSeed.length){
+    toSeed.forEach(t=>{tasks.unshift({id:uid(),...t,done:false,ts:Date.now(),autoGenerated:true,owner:'Director'});});
+    saveTasks(); renderTasks();
+  }
 }
 
 // ═══════════════ INIT ═══════════════
